@@ -34,6 +34,7 @@ export default function SignIn() {
 
     const [email,setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [type,setType] = useState('');
     const port = 1330;
   async function handleSubmit(event)
   {
@@ -47,24 +48,28 @@ export default function SignIn() {
         },
         body: JSON.stringify(
             {
-                email, password
+                email, password ,type
             }
         )
     })
 
-    const data = await response.json()
+    const data = await response.json();
+    console.log(data);
 
-    if(data.user)
+    if(data.user.type==='patient')
     {
         alert('Login Successful')
         window.location.href='/dashboard'
+    }
+    else if(data.user.type==='doctor')
+    {
+      alert('Login Successful')
+      window.location.href='/dashboard2'
     }
     else
     {
         alert('Please check your username and password')
     }
-
-    console.log(data)
   }
 
   return (
@@ -113,6 +118,34 @@ export default function SignIn() {
          
 
             />
+            <TextField     
+            value={type}
+            onChange={(e)=>setType(e.target.value)}
+              margin="normal"
+              required
+              fullWidth
+              name="type"
+              label="User Type"
+              type="text"
+              id="type"
+              autoComplete="user-type"
+         
+
+            />
+            {/* <TextField     
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+         
+
+            /> */}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

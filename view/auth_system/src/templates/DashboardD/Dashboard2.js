@@ -116,7 +116,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Dashboard doctor
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

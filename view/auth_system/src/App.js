@@ -2,17 +2,20 @@ import React from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import SignIn from './templates/SignIn' ;
 import SignUp from './templates/SignUp';
-import Dashboard from './templates/Dashboard';
 import Forgot from './templates/Forgot';
-
+import Dashboard2 from './templates/DashboardD/Dashboard2'
+import Patient1 from './templates/DashboardP/Patient1';
+import MemberDetailsPage from './templates/DashboardP/MemberDetails';
 function App() {
   return (
     <BrowserRouter>
     <Routes>
     <Route path='/'  Component={SignIn}/>
     <Route path='/signup'  Component={SignUp}/> 
-    <Route path='/dashboard'  Component={Dashboard}/> 
+    <Route path='/dashboard'  Component={Patient1}/> 
+    <Route path='/dashboard2'  Component={Dashboard2}/> 
     <Route path='/forgotP'  Component={Forgot}/> 
+    <Route path='/memberDetails' Component={MemberDetailsPage}/>
 
 
 

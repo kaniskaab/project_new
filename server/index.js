@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const cors = require('cors')
 const User = require('./models/user_model')
+const Prescription = require('./models/prescription')
 const jwt = require('jsonwebtoken')
 const error = require('./errorHandling/error')
 const dotenv = require("dotenv").config();
@@ -15,18 +16,61 @@ app.use(cors())
 dbConnect()
 app.use(express.json())
 
+app.post('/api/prescription/post', async(req,res)=>
+{
+    console.log(req.body);
+    const {id, prescription}=req.body;
+    try{
+        const pres= await Prescription.create(
+            {
+                id:id,
+                prescription:prescription
+            }
+        )
+        res.json({prescription: pres.prescription})
+    }
+    catch(err)
+    {
+        res.json({status:'error'})
+    }
+
+})
+
+app.post('/api/prescription/get/:id', async(req,res)=>
+{
+    // console.log(req.params.id)
+    
+    const id = req.params.id
+    const pres = await Prescription.findOne(
+        {
+            id:id
+        }
+    )
+    if(pres)
+    {
+        console.log(pres)
+        return res.json(pres)
+        // 
+    }
+    else{
+        console.log('error')
+        return res.json({status:"error"})
+    }
+})
+
 app.post('/api/auth/init-user', async (req,res)=>
 { 
     console.log(req.body)
-    const {email,password} = req.body;
+    const {email,password,type} = req.body;
     try{
         const user = await User.create(
             {
                 email: email,
-                password:password
+                password:password,
+                type:type
             }
         )
-        res.json({status:'ok'})
+        res.json({id: user.id})
     }
     catch(err){
         res.json({status:'error', error:'Duplicate email'})
@@ -37,30 +81,32 @@ app.post('/api/auth/init-user', async (req,res)=>
 // app.post('/api')
 app.post('/api/auth', async (req,res)=>
 {
-    console.log(req.body)
-    const{email, password}= req.body
+    console.log("the data is" , req.body)
+    const{email, password,type}= req.body
         const user = await User.findOne(
             {
                 email: email,
-                password:password
+                password:password,
+                type:type
             }
 
         )
         if(user)
         {
-            const token = jwt.sign(
-                {
-                    email: email
-                },
-                'secret123'
-            )
-            return res.json({status:'ok', user:true})
+            // const token = jwt.sign(
+            //     {
+            //         email: email
+            //     },
+            //     'secret123'
+            // )
+            console.log(user.id)
+            return res.json({user})
 
 
         }
         else{
-            alert('Email ID already registered!')
-
+            // alert('Email ID not registered!')
+            console.log("error!")
             return res.json({status:'error', user:false})
         }})
     

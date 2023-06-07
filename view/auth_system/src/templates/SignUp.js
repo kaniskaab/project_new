@@ -33,8 +33,10 @@ const defaultTheme = createTheme();
 export default function SignUp() {
     const [email,setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [type,setType] = useState('');
+
     const port = 1330;
-    const lnk = `http://localhost:${port}/api/init-user`
+    const lnk = `http://localhost:${port}/api/auth/init-user`
   async function handleSubmit(event)
   {
 
@@ -47,12 +49,13 @@ export default function SignUp() {
         },
         body: JSON.stringify(
             {
-                email, password
+                email, password, type
             }
         )
     })
 
-    const data = await response.json()
+    const data = await response.json();
+    alert(`your unique id is ${data.id}`);
     console.log(data)
   }
 
@@ -101,6 +104,21 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
+              <TextField     
+            value={type}
+            onChange={(e)=>setType(e.target.value)}
+              margin="normal"
+              required
+              fullWidth
+              name="type"
+              label="User Type"
+              type="text"
+              id="type"
+              autoComplete="user-type"
+         
+
+            />
+
             </Grid>
             <Button
               type="submit"

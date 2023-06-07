@@ -1,0 +1,94 @@
+[
+    {
+        "id":1,
+        "name":"member1",
+        "age":"20",
+        "height":"5'4",
+        "weight":"56",
+        "allergies":[
+            {
+            "id":1,
+            "allergyName":"allergy1" 
+            },
+            {
+                "id":2,
+                "allergyName":"allergy2" 
+            },
+            {
+                "id":3,
+                "allergyName":"allergy3" 
+            }
+           
+    ]
+    
+            
+        
+       
+    },
+    {
+        "id":2,
+        "name":"member2",
+        "age":"20",
+        "height":"5'4",
+        "weight":"56",
+        "allergies":[
+            {
+            "id":1,
+            "allergyName":"allergy1" 
+            },
+            {
+                "id":2,
+                "allergyName":"allergy2" 
+            },
+            {
+                "id":3,
+                "allergyName":"allergy3" 
+            }
+           
+    ]
+    },
+    {
+        "id":3,
+        "name":"member3",
+        "age":"20",
+        "height":"5'4",
+        "weight":"56",
+        "allergies":[
+            {
+            "id":1,
+            "allergyName":"allergy1" 
+            },
+            {
+                "id":2,
+                "allergyName":"allergy2" 
+            },
+            {
+                "id":3,
+                "allergyName":"allergy3" 
+            }
+           
+    ]
+    },
+    {
+        "id":4,
+        "name":"member4",
+        "age":"20",
+        "height":"5'4",
+        "weight":"56",
+        "allergies":[
+            {
+            "id":1,
+            "allergyName":"allergy1" 
+            },
+            {
+                "id":2,
+                "allergyName":"allergy2" 
+            },
+            {
+                "id":3,
+                "allergyName":"allergy3" 
+            }
+           
+    ]
+    }
+]
