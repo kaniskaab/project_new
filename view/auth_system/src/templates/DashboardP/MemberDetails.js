@@ -73,25 +73,48 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function PersistentDrawerRight() {
 
-    const [memberDetails, setMemberDetails] = useState({
-        name: 'John Doe',
+    // const [memberDetails, setMemberDetails] = useState({
+    //     name: 'John Doe',
+    //     age: '',
+    //     height: '',
+    //     weight: '',
+    //     allergies: ['Allergy 1'],
+    //     prescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    //   });
+
+      const [formData, setFormData] = useState({
+        name: '',
         age: '',
         height: '',
         weight: '',
         allergies: ['Allergy 1'],
         prescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       });
-          const handleInputChange = (event) => {
-            const { name, value } = event.target;
-            setMemberDetails((prevMemberDetails) => ({
-              ...prevMemberDetails,
-              [name]: value,
-            }));
-          };
+    
+      const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      };
+    
+      const handleUpdate = () => {
+        console.log('Form Data:', formData);
+      };
+      
+
+          // const handleInputChange = (event) => {
+          //   const { name, value } = event.target;
+          //   setMemberDetails((prevMemberDetails) => ({
+          //     ...prevMemberDetails,
+          //     [name]: value,
+          //   }));
+          // };
         
-          const handleUpdateDetails = () => {
-            console.log(memberDetails);
-          };
+          // const handleUpdateDetails = () => {
+          //   console.log(memberDetails);
+          // };
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -126,8 +149,9 @@ export default function PersistentDrawerRight() {
       </AppBar>
       <Main open={open}>
         <DrawerHeader />
-    <div>
-      <Typography variant="h6">Member Details</Typography>
+    <Box 
+    >
+      <Typography variant="h4" align='center'>Member Details</Typography>
       <Grid container spacing={2}>
         <Grid item xs={12} >
         <DetailPage/>
@@ -136,10 +160,66 @@ export default function PersistentDrawerRight() {
             marginTop={2}
             textAlign="center"
         >
-            <Title>
+          <Title>
+            <Typography variant="h4" align="center" fontWeight="bold" sx={{ marginTop: '20px' }}>
                 Update Details
-            </Title>
-        </Grid>
+            </Typography>
+          </Title>
+          <Box
+      sx={{
+        backgroundColor: '#C9D1D5',
+        borderRadius: '15px',
+        p: 2,
+        maxWidth: '80%',
+        margin: '0 auto',
+        marginBottom:'20px'
+      }}
+    >
+      <form>
+        <TextField
+          name="name"
+          label="Name"
+          value={formData.name}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          variant="outlined"
+        />
+        <TextField
+          name="age"
+          label="Age"
+          value={formData.age}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          variant="outlined"
+        />
+        <TextField
+          name="height"
+          label="Height"
+          value={formData.height}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          variant="outlined"
+        />
+        <TextField
+          name="weight"
+          label="Weight"
+          value={formData.weight}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          variant="outlined"
+        />
+        <Button variant="contained" color="primary" onClick={handleUpdate}>
+          Update
+        </Button>
+      </form>
+    </Box>
+          
+            
+        {/* </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             label="Name"
@@ -181,14 +261,21 @@ export default function PersistentDrawerRight() {
           <Button variant="outlined" onClick={handleUpdateDetails}>
             Update Details
           </Button>
-        </Grid>
-        </Grid>
+        </Grid>*/}
+        </Grid> 
       </Grid>
-      <Typography variant="h6">Prescription</Typography>
-      <Paper style={{ padding: '16px', marginTop: '16px' }}>
-        <Typography variant="body1">{memberDetails.prescription}</Typography>
-      </Paper>
-    </div>
+      <Box sx={{backgroundColor:"#C9D1D5" , borderRadius:"15px" , padding:"10px"}}>
+        <Title>
+            <Typography variant="h4" align="center" fontWeight="bold" sx={{ marginTop: '20px' }}>
+                Prescription
+            </Typography>
+          </Title>
+      <Box style={{ padding: '16px', marginTop: '16px' }}>
+        <Typography variant="body1">{formData.prescription}</Typography>
+      </Box>
+      </Box>
+      
+    </Box>
       </Main>
       <Drawer
         sx={{

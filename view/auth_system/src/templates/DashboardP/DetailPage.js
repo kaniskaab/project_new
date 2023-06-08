@@ -1,9 +1,7 @@
 import * as React from 'react';
 import  Button from '@mui/material/Button'
-import BookIcon from '@mui/icons-material/Book';
-import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid'
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Title from './Title';
@@ -22,38 +20,45 @@ export default function DetailPage() {
   return (
     <>
     <Box
-      sx={{ width: '100%' }}
+      sx={{ width: '100%',backgroundColor: '#C9D1D5' , borderRadius: '8px' }}
+      marginTop={5}
+      padding={2}
       >
-    <Stack
-        direction="row"
-        divider={<Divider orientation="vertical" flexItem />}
-        spacing={2}
-        justifyContent="center"
-    alignItems="center"
-    minWidth="80%">
-        <Item>
-          <Title>
+         <Grid container spacing={2}>
+      <Grid item xs={12} sm={4}>
+        <div style={{  height: '100%' }}>
+        <Title>
             Allergies
           </Title>
           <AllergyForm/>
-
-        </Item>
-        <Item>
-          <PastConsultation/>
-        </Item>
-        <Item><UpcomingConsultation/></Item>
-      </Stack>
-      </Box>
-      <Box
+          </div>
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <div style={{ height: '100%' }}>
+        <PastConsultation/>
+          </div>
+      </Grid>
+      <Grid item xs={12} sm={4}>
+        <div style={{ height: '100%' }}>
+        <UpcomingConsultation/>
+          </div>
+      </Grid>
+      <Grid item xs={12} sm={12}>
+        <div style={{ height: '100%' }}>
+        <Box
   m={1}
   display="flex"
   justifyContent="center"
   alignItems="center"
 >
-  <Button variant="contained" color="primary" sx={{ height: 40 }}>
+  <Button variant="contained" color="primary" sx={{ height: 40 }} href="/doctorSearch">
     Book Consultation
   </Button>
 </Box>
+          </div>
+      </Grid>
+    </Grid>
+      </Box>
     </>
   
       

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-// details=Details[0];
+import { Button, Input, List, ListItem, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const InputContainer = styled('div')({
+  marginBottom: '16px',
+});
+
 const AllergyForm = () => {
   const [allergy, setAllergy] = useState('');
   const [allergiesList, setAllergiesList] = useState([]);
@@ -30,19 +36,28 @@ const AllergyForm = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        value={allergy}
-        onChange={handleInputChange}
-        placeholder="Enter allergy"
-      />
-      <button onClick={handleAddAllergy}>Add</button>
-      <button onClick={handleSaveToLocalStorage}>Save Changes</button>
-      <ul>
+      <InputContainer>
+        <Input
+          type="text"
+          value={allergy}
+          onChange={handleInputChange}
+          placeholder="Enter allergy"
+          fullWidth
+        />
+      </InputContainer>
+      <Button variant="contained" sx={{padding:'10px', margin:'10px'}} onClick={handleAddAllergy}>
+        Add
+      </Button>
+      <Button variant="contained" sx={{padding:'10px', margin:'10px'}} onClick={handleSaveToLocalStorage}>
+        Save Changes
+      </Button>
+      <List>
         {allergiesList.map((item) => (
-          <li key={item.id}>{item.name}</li>
+          <ListItem key={item.id}>
+            <Typography>{item.name}</Typography>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   );
 };

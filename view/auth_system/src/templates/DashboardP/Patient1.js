@@ -127,14 +127,17 @@ const handleChange = (event) => {
         <DetailPage/>
 
         <Grid
-        container marginTop={10}
-    display="flex"
+        container
+    // display="flex"
     justifyContent="center"
-    minHeight="100vh"
+    // minHeight="100vh"
 >
      <Box sx={{ width: '70%' }}>
         <Title>
-            Add Member Details or Book New Consultation
+          <Typography variant="h5" align="center" fontWeight="bold" sx={{ marginTop: '20px' }}>
+             Add Member Details or Book New Consultation
+          </Typography>
+           
         </Title>
       <Grid container  rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={12}>
@@ -159,7 +162,6 @@ const handleChange = (event) => {
         </Grid>
         <Grid item xs={6}>
           <Item>
-            {/* <AddFeature/> */}
             <AddMember/>
           </Item>
         </Grid>

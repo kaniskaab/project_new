@@ -8,6 +8,7 @@ const error = require('./errorHandling/error')
 const dotenv = require("dotenv").config();
 const dbConnect = require('./config/config_db')
 const port = process.env.PORT;
+const Pool = require('./database') 
 // const path = require("path")
 
 // mongoose.connect('mongodb+srv://kaniskaab33:kaniskaa@cluster0.ln0cr5w.mongodb.net/user_auth?retryWrites=true&w=majority')
@@ -42,9 +43,7 @@ app.post('/api/prescription/get/:id', async(req,res)=>
     
     const id = req.params.id
     const pres = await Prescription.findOne(
-        {
-            id:id
-        }
+        {id:id}
     )
     if(pres)
     {
@@ -58,9 +57,31 @@ app.post('/api/prescription/get/:id', async(req,res)=>
     }
 })
 
-app.post('/api/auth/init-user', async (req,res)=>
+app.post('/api/auth/init-user', async(req,res)=>
 { 
     console.log(req.body)
+    
+
+    //new info
+    // const username = req.body["username"]
+    // const password = req.body["password"]
+    // console.log(username,password)
+    // const insertInTbl = `INSERT INTO accounts (username, password) VALUES ('${username}','${password}') `;
+    // Pool.query(insertInTbl).then((response)=>{
+    //     console.log("data saved");
+    //     console.log(response);
+
+    // })
+    // .catch((err)=>
+    // {
+    //     console.log("error");
+    // })
+
+    // console.log(req.body);
+    // res.send("response received: " + req.body)
+    //postgres ends
+
+
     const {email,password,type} = req.body;
     try{
         const user = await User.create(
@@ -81,7 +102,39 @@ app.post('/api/auth/init-user', async (req,res)=>
 // app.post('/api')
 app.post('/api/auth', async (req,res)=>
 {
-    console.log("the data is" , req.body)
+    // console.log("the data is" , req.body)
+    console.log(req.body)
+    
+
+    //new info
+    // const username = req.body["username"]
+    // const password = req.body["password"]
+    // console.log(username,password)
+    // const searchInTbl = `SELECT * FROM accounts WHERE username='${username}'`;
+    // Pool.query(searchInTbl).then((response)=>{
+    //     console.log("data received");
+    //     console.log(response)
+    //     if(response.rows[0].password==password)
+    //     {
+    //         res.send('login successful')
+    //     }
+    //     else{
+    //         res.send()
+    //     }
+    //     console.log('Check credentials');
+
+    // })
+    // .catch((err)=>
+    // {
+    //     console.log("error");
+    // })
+
+    // console.log(req.body);
+
+    //postgres ends
+    // res.send("response received: " + req.body)
+
+    // save it
     const{email, password,type}= req.body
         const user = await User.findOne(
             {
@@ -108,7 +161,10 @@ app.post('/api/auth', async (req,res)=>
             // alert('Email ID not registered!')
             console.log("error!")
             return res.json({status:'error', user:false})
-        }})
+        }
+}
+    )
+        //till here good
     
     app.post('/api/auth/forgot-password', async (req,res)=>
     {
