@@ -7,6 +7,7 @@ import Dashboard2 from './templates/DashboardD/Dashboard2'
 import Patient1 from './templates/DashboardP/Patient1';
 import MemberDetailsPage from './templates/DashboardP/MemberDetails';
 import DoctorSearch from './templates/DashboardP/DoctorSearch';
+import DoctorRegistrationForm from './templates/DoctorRegistration';
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ function App() {
     <Route path='/forgotP'  Component={Forgot}/> 
     <Route path='/memberDetails' Component={MemberDetailsPage}/>
     <Route path='/doctorSearch' Component={DoctorSearch}/>
+    <Route path='/doctorRegistration' Component={DoctorRegistrationForm}/>
 
 
 
