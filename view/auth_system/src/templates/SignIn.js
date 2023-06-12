@@ -47,7 +47,7 @@ export default function SignIn() {
   const [type, setType] = useState("");
   async function handleSubmit(event) {
     event.preventDefault();
-    const lnk = `http://[::1]:3333/api/auth/login`;
+    const lnk = `${process.env.REACT_APP_BASE_URL}/api/auth/login`;
     const response = await fetch(lnk, {
       method: "POST",
       headers: {
@@ -58,20 +58,27 @@ export default function SignIn() {
         password
       }),
     });
-
+    console.log('response: ', response)
     const data = await response.json();
     console.log(data);
-    if (data.accessToken && type==='patient') {
+    if (data.accessToken && data.user.role==='user') {
       console.log(members)
       navigate('/dashboard',{state:{members,data}});
-      alert(`Login Successful ${data.user.name} `)
       // window.location.href = "/dashboard";
-      
-    } else if ( data.accessToken &&  type === "doctor") {
-      alert("Login Successful");
-      window.location.href = "/dashboard2";
+      localStorage.setItem('token', data.accessToken)
+      localStorage.setItem('refreshToken', data.refreshToken)
+      localStorage.setItem('role', data.user.role)
+    } else if ( data.accessToken &&  data.user.role === "doctor") {
+      localStorage.setItem('token', data.accessToken)
+      localStorage.setItem('refreshToken', data.refreshToken)
+      localStorage.setItem('role', data.user.role)
+      window.location.href = "/dashboard2"; //TODO use routing
     } else {
-      alert("Please check your username and password");
+//      alert("Please check your username and password");
+      //TODO show mui alert, non modal, closeable with message.
+      console.error('wrong password: ', data)
+      localStorage.removeItem('token')
+      localStorage.removeItem('refreshToken')
     }
   }
 

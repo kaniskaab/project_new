@@ -6,8 +6,8 @@ export const UserProvider = ({ children }) => {
   const [members, setMembers] = useState([]);
   const[id,setId]=useState(0);
 
-  //CHANGE TOKEN 
-  const refreshToken = process.env.REACT_APP_REFRESH_TOKEN
+  //CHANGE TOKEN
+  const refreshToken = localStorage.getItem('token')
         useEffect(() => {
   //FETCHING ALL MEMBERS FROM THE API
     const fetchData = async () => {

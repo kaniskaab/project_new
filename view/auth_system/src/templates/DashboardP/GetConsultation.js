@@ -11,9 +11,9 @@ const location=useLocation();
   //CHANGE TOKEN ACCORDINGLY
 
 
-  const refreshToken =process.env.REACT_APP_REFRESH_TOKEN
+  const refreshToken = localStorage.getItem('token')
      const fetchDoctors = async () => {
-  
+
 
 
     //GET ALL THE DOCTORS
@@ -35,8 +35,8 @@ const location=useLocation();
   const bookConsultation = (doctorId) => {
     const appointmentData = {
       doctorId: doctorId,
-      memberId: location.state.mainId, 
-      familyMemberId: location.state.fmId, 
+      memberId: location.state.mainId,
+      familyMemberId: location.state.fmId,
       dateOfAppointment: new Date().toISOString(),
       force: true,
       fees: 0

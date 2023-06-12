@@ -91,15 +91,15 @@ const [members,setMembers]=useState(location.state.members)
 const allMember = members.filter((member)=>
 (
   member.user.id===location.state.data.user.id
-))   
+))
 
 const val = String(location.state.data.user.name)
 
-  const familyMembers = allMember[0].familyMembers
+  const familyMembers = allMember[0]?.familyMembers
   console.log(allMember[0])
   const handleSubmit = (event) => {
     const value = event;
-    const mainId= allMember[0].id;
+    const mainId= allMember[0]?.id;
     navigate('/memberDetails',{state:{value,familyMembers,mainId}});
   };
 
@@ -107,18 +107,17 @@ const val = String(location.state.data.user.name)
 
 
   //CHANGE TO VALID TOKEN
-  const refreshToken =process.env.REACT_APP_REFRESH_TOKEN
-
+    const accessToken = localStorage.getItem('token')
 // GET REQUEST TO GET ALL MEMBERS
   const userSubmit=async()=>
   {
     try {
       //CHANGE FETCH LINK ACCORDINGLY
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0].id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0]?.id}`, {
         method:'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${refreshToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           // Add other headers as needed
         },
       });
@@ -146,17 +145,17 @@ const val = String(location.state.data.user.name)
     setOpen(false);
   };
   const navigate=useNavigate();
- 
+
 
   //DELETE A  FAMILY MEMBER
  const handleDelete = async (id)=>{
   try {
     //CHANGE FETCH LINK ACCORDINGLY
-    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0].id}/family-member/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0]?.id}/family-member/${id}`, {
       method:'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${refreshToken}`,
+        'Authorization': `Bearer ${accessToken}`,
         // Add other headers as needed
       },
     });
@@ -167,7 +166,7 @@ const val = String(location.state.data.user.name)
 
     const data = await response.json();
     console.log(data)
-    alert('Member Deleted')
+    //alert('Member Deleted')
   } catch (error) {
     console.error('An error occurred while fetching user data:', error);
   }
@@ -178,11 +177,11 @@ const val = String(location.state.data.user.name)
  const deleteUser=async ()=>{
   try {
     //CHANGE FETCH LINK ACCORDINGLY
-    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0].id}`, {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0]?.id}`, {
       method:'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${refreshToken}`,
+        'Authorization': `Bearer ${accessToken}`,
         // Add other headers as needed
       },
     });
@@ -193,7 +192,7 @@ const val = String(location.state.data.user.name)
 
     const data = await response.json();
     console.log(data)
-    alert('Member Deleted')
+   // alert('Member Deleted')
   } catch (error) {
     console.error('An error occurred while fetching user data:', error);
   }
@@ -220,24 +219,24 @@ const val = String(location.state.data.user.name)
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${refreshToken}`,
+      'Authorization': `Bearer ${accessToken}`,
     }
   })
     .then(response => {
       if (response.ok) {
         setData(response.json())
       } else {
-        alert('Failed to update profile.');
+        //alert('Failed to update profile.');
       }
     })
     .catch(error => {
       console.error('Failed to update profile:', error);
-      alert('Failed to update profile.');
+      //alert('Failed to update profile.');
     });
 };
 
 //UPDATING ALL EXCEPT MEMBERS AND DOCTORS
- 
+
 const requestBody = {
   name: name,
   username: username,
@@ -249,27 +248,27 @@ const requestBody = {
 
 //PATCHING
 //CHNAGE FETCH LINK ACCORDINGLY
-   fetch(`${process.env.REACT_APP_BASE_URL}/api/users/${location.state.data.user.id}/profile`, {
+  /* fetch(`${process.env.REACT_APP_BASE_URL}/api/users/${location.state.data.user.id}/profile`, {
      method: 'PATCH',
      headers: {
        'Content-Type': 'application/json',
-       'Authorization': `Bearer ${refreshToken}`,
+       'Authorization': `Bearer ${accessToken}`,
      },
      body: JSON.stringify(requestBody)
    })
      .then(response => {
        if (response.ok) {
-         alert('Profile updated successfully!');
+         //alert('Profile updated successfully!');
        } else {
-         alert('Failed to update profile.');
+         //alert('Failed to update profile.');
        }
      })
      .catch(error => {
        console.error('Failed to update profile:', error);
-       alert('Failed to update profile.');
+       //alert('Failed to update profile.');
      });
-  
-  
+*/
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -291,7 +290,7 @@ const requestBody = {
       </AppBar>
       <Main open={open}>
         <DrawerHeader />
-        <DetailPage id={allMember[0].id} />
+        <DetailPage id={allMember[0]?.id} />
 
         <Grid
           container
@@ -317,7 +316,7 @@ const requestBody = {
             >
               <Grid item xs={12}>
                 <Item>
-                  <AddMember value={allMember[0].id} />
+                  <AddMember value={allMember[0]?.id} />
                 </Item>
               </Grid>
               <Grid item xs={12}
@@ -357,7 +356,7 @@ const requestBody = {
         </Button>
       </div>
     </Container>
-        </Grid> 
+        </Grid>
         <Grid item xs={6}>
         <Button onClick={deleteUser}>
           Delete account?
@@ -392,8 +391,8 @@ const requestBody = {
           <Button onClick={userSubmit}>
             Update Users
           </Button>
-        
-          {allMember[0].familyMembers.map((member) => (
+
+          {allMember[0]?.familyMembers.map((member) => (
               <ListItem key={member.id} disablePadding>
                 <ListItemButton onClick={()=>{handleSubmit(member.id)}}>
                   <ListItemIcon>

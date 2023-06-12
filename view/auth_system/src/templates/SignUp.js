@@ -40,11 +40,11 @@ export default function SignUp() {
     var role ='';
 
     const port = 1330;
-   
+
   async function handleSubmit(event)
   {
     event.preventDefault()
-    const lnk = `http://[::1]:3333/api/auth/register`
+    const lnk = `${process.env.REACT_APP_BASE_URL}/api/auth/register`
     const response = await fetch(lnk,{
        method:'POST',
     headers:
@@ -79,7 +79,7 @@ export default function SignUp() {
           // "role": "string"
         }
         )
-       
+
   });
 
     const data = await response.json();
@@ -134,7 +134,7 @@ export default function SignUp() {
                 </Grid>
 
                 <Grid item xs={12}>
-                <TextField     
+                <TextField
                 value={username}
                 onChange={(e)=>setUsername(e.target.value)}
                 margin="normal"
@@ -171,7 +171,7 @@ export default function SignUp() {
               Sign Up
             </Button>
             </Box>
-           
+
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/" variant="body2">
@@ -179,7 +179,7 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid>
-           
+
           </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
