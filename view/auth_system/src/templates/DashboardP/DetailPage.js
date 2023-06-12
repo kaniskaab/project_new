@@ -8,6 +8,7 @@ import Title from './Title';
 import AllergyForm from './AllergyForm';
 import PastConsultation from './PastConsultation';
 import UpcomingConsultation from './UpcomingConsulatation';
+import { useNavigate } from 'react-router-dom';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -16,7 +17,14 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function DetailPage() {
+export default function DetailPage(props) {
+  const navigate=useNavigate();
+  const mainId=props.mainId, fmId=props.fmId
+  const Handle =()=>
+  {
+  
+    navigate('/getC',{state:{mainId,fmId}});
+  }
   return (
     <>
     <Box
@@ -24,13 +32,15 @@ export default function DetailPage() {
       marginTop={5}
       padding={2}
       >
+        {console.log(props)}
          <Grid container spacing={2}>
       <Grid item xs={12} sm={4}>
         <div style={{  height: '100%' }}>
         <Title>
             Allergies
           </Title>
-          <AllergyForm/>
+          <AllergyForm value={props.mainId} fmId={props.fmId} new={props.id}/>
+          {console.log(props.id)}
           </div>
       </Grid>
       <Grid item xs={12} sm={4}>
@@ -51,7 +61,7 @@ export default function DetailPage() {
   justifyContent="center"
   alignItems="center"
 >
-  <Button variant="contained" color="primary" sx={{ height: 40 }} href="/doctorSearch">
+  <Button variant="contained" color="primary" sx={{ height: 40 }} onClick={Handle}>
     Book Consultation
   </Button>
 </Box>

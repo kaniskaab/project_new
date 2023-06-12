@@ -7,45 +7,46 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DataDrivenForm from './DataDrivenForm';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
-export default function AddMember() {
+export default function AddMember(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  console.log(props.value);
+  // const classes =styles();
 
   return (
     <div>
       <Button onClick={handleOpen}>Add Member</Button>
       <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-           <DataDrivenForm/>
-          </Box>
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="scrollable-modal-title"
+  aria-describedby="scrollable-modal-description"
+>
+  <div
+    style={{
+      overflow: 'auto',
+      maxHeight: '90%',
+      maxWidth: '90%',
+      width: 'auto',
+      margin: '16px',
+      backgroundColor: 'white',
+      boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.2)',
+      padding: '16px',
+    }}
+  >
+      <Fade in={open}>
+          <Box > 
+           <DataDrivenForm value={props.value}/>
+           </Box> 
         </Fade>
-      </Modal>
+ </div>
+ </Modal>
     </div>
   );
 }

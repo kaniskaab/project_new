@@ -33,30 +33,58 @@ const defaultTheme = createTheme();
 export default function SignUp() {
     const [email,setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [type,setType] = useState('');
+    const [name,setName]=useState('');
+    const [username,setUsername]=useState('')
+    var doctor={};
+    var member ={};
+    var role ='';
 
     const port = 1330;
-    const lnk = `http://localhost:${port}/api/auth/init-user`
+   
   async function handleSubmit(event)
   {
-
     event.preventDefault()
+    const lnk = `http://[::1]:3333/api/auth/register`
     const response = await fetch(lnk,{
        method:'POST',
     headers:
         {
             'Content-Type':'application/json'
         },
-        body: JSON.stringify(
-            {
-                email, password, type
-            }
+        body:JSON.stringify(
+           {name, username, password,email, member
+
+          // "member": {
+          //   "userId": 0,
+          //   "age": 0,
+          //   "gender": "string",
+          //   "govtId": "string",
+          //   "allergies": [
+          //     {}
+          //   ],
+          //   "planCoverage": {
+          //     "start": "string",
+          //     "end": "string",
+          //     "employerId": "string",
+          //     "employeeId": "string",
+          //     "coveredAdults": 0,
+          //     "coveredChildren": 0
+          //   }
+          // },
+          // "doctor": {},
+          // "name": "string",
+          // "username": "string12",
+          // "email": "string3@gmail.com",
+          // "password": "string",
+          // "role": "string"
+        }
         )
-    })
+       
+  });
 
     const data = await response.json();
-    alert(`your unique id is ${data.id}`);
-    console.log(data)
+    console.log(data.message);
+    alert(`your unique id is ${data.message}`);
   }
 
   return (
@@ -78,7 +106,7 @@ export default function SignUp() {
             Sign up
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-              <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6}>
               <Grid item xs={12}>
                 <TextField
                  value={email}
@@ -103,24 +131,38 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                 />
-              </Grid>
-              <TextField     
-            value={type}
-            onChange={(e)=>setType(e.target.value)}
-              margin="normal"
-              required
-              fullWidth
-              name="type"
-              label="User Type"
-              type="text"
-              id="type"
-              autoComplete="user-type"
-         
+                </Grid>
 
-            />
+                <Grid item xs={12}>
+                <TextField     
+                value={username}
+                onChange={(e)=>setUsername(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                name="type"
+                label="User Name"
+                type="text"
+                id="username"
+                autoComplete="username"
+                />
+                </Grid>
+                <Grid item xs={12}>
+                <TextField
+                 value={name}
+                 onChange={(e)=>setName(e.target.value)}
+                  required
+                  fullWidth
+                  name="name"
+                  label="Name"
+                  type="name"
+                  id="password"
+                  autoComplete="name"
+                />
+              </Grid>
 
             </Grid>
-            <Button
+             <Button
               type="submit"
               fullWidth
               variant="contained"
@@ -128,6 +170,8 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            </Box>
+           
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/" variant="body2">
@@ -135,8 +179,8 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid>
+           
           </Box>
-        </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>

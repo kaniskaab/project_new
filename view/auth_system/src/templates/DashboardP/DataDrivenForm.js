@@ -1,126 +1,104 @@
 import React, { useState } from 'react';
-import {
-  TextField,
-  Button,
-  Grid,
-  Typography,
-} from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
-const DataDrivenForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    age: '',
-    weight: '',
-    height: '',
-    allergies: [],
-  });
+function FamilyMemberForm(props) {
+  const [name, setName] = useState('');
+  const [age, setAge] = useState(0);
+  const [gender, setGender] = useState('');
+  const [govtId, setGovtId] = useState('');
+  const [relation, setRelation] = useState('');
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
-  const handleAddAllergy = () => {
-    const { allergies } = formData;
-    const newAllergy = { id: new Date().getTime(), allergyName: '' };
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      allergies: [...allergies, newAllergy],
-    }));
-  };
-
-  const handleAllergyInputChange = (event, index) => {
-    const { value } = event.target;
-    setFormData((prevFormData) => {
-      const updatedAllergies = [...prevFormData.allergies];
-      updatedAllergies[index].allergyName = value;
-      return { ...prevFormData, allergies: updatedAllergies };
-    });
-  };
-
-  const handleSubmit = (event) => {
+  //CHANGE TOKEN
+  const refreshToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiYW5vdGhlcnRvbmV5MkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NjU2OTI2NiwiZXhwIjoxNjg2NTcyODY2LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.T2mJnjA9FcSXFDFKTHXX3lch3kEoY_A4rxDQm5uBcPw'
+    const handleSubmit = async (event) => {
     event.preventDefault();
-    const jsonData = JSON.stringify(formData);
-    console.log(jsonData);
+
+    const familyMember = {
+      name,
+      age,
+      gender,
+      govtId,
+      relation,
+    };
+
+    //ADDING A FAMILY MEMBER
+
+    try {
+      //CHANGE FETCH LINK ACCORDINGLY
+      const response = await fetch(`http://[::1]:3333/api/members/${props.value}/family-members`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization':`Bearer ${refreshToken}`
+        },
+        body: JSON.stringify(familyMember),
+      });
+
+      if (response.ok) {
+        console.log(response.json())
+        alert('Family member added successfully!');
+      } else {
+        console.error('Failed to add family member.');
+      }
+    } catch (error) {
+      console.error('An error occurred while adding a family member:', error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={2} style={{ marginTop: '16px' }}>
-        <Grid item xs={12}>
-          <Typography variant="h6">Personal Information</Typography>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            label="Name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            fullWidth
-            style={{ marginBottom: '16px' }}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            label="Age"
-            name="age"
-            value={formData.age}
-            onChange={handleInputChange}
-            fullWidth
-            style={{ marginBottom: '16px' }}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            label="Weight"
-            name="weight"
-            value={formData.weight}
-            onChange={handleInputChange}
-            fullWidth
-            style={{ marginBottom: '16px' }}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            label="Height"
-            name="height"
-            value={formData.height}
-            onChange={handleInputChange}
-            fullWidth
-            style={{ marginBottom: '16px' }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h6">Allergies</Typography>
-          {formData.allergies.map((allergy, index) => (
-            <TextField
-              key={allergy.id}
-              label="Allergy"
-              value={allergy.allergyName}
-              onChange={(event) => handleAllergyInputChange(event, index)}
-              fullWidth
-              style={{ marginBottom: '16px' }}
-            />
-          ))}
-          <Button
-            variant="outlined"
-            onClick={handleAddAllergy}
-            style={{ marginLeft: '8px' }}
-          >
-            Add Allergy
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
-        </Grid>
-      </Grid>
+      <TextField
+        label="Name"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+        variant="outlined"
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+        label="Age"
+        value={age}
+        onChange={(event) => setAge(parseInt(event.target.value))}
+        variant="outlined"
+        type="number"
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+        label="Gender"
+        value={gender}
+        onChange={(event) => setGender(event.target.value)}
+        variant="outlined"
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+        label="Government ID"
+        value={govtId}
+        onChange={(event) => setGovtId(event.target.value)}
+        variant="outlined"
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+        label="Relation"
+        value={relation}
+        onChange={(event) => setRelation(event.target.value)}
+        variant="outlined"
+        fullWidth
+        margin="normal"
+      />
+
+      <Button type="submit" variant="contained" color="primary">
+        Submit
+      </Button>
     </form>
   );
-};
+}
 
-export default DataDrivenForm;
+export default FamilyMemberForm;
+
+
+
+ 

@@ -2,6 +2,8 @@ import React from 'react';
 import { Typography, Paper } from '@mui/material';
 
 const PastConsultation = () => {
+
+  
   const consultationHistory = [
     {
       id: 1,
