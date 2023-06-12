@@ -10,7 +10,7 @@ function FamilyMemberForm(props) {
   const [relation, setRelation] = useState('');
 
   //CHANGE TOKEN
-  const refreshToken =process.env.REACT_APP_REFRESH_TOKEN
+  const refreshToken = localStorage.getItem('token')
     const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -101,4 +101,3 @@ export default FamilyMemberForm;
 
 
 
- 

@@ -16,8 +16,8 @@ const AllergiesComponent = (props) => {
   const[newReportedBy,setNewReportedBy]=useState('')
   const [newAllergy, setNewAllergy] = useState('');
 
-  //CHANGE TOKEN 
-  const refreshToken =process.env.REACT_APP_REFRESH_TOKEN
+  //CHANGE TOKEN
+  const refreshToken = localStorage.getItem('token')
          useEffect(() => {
     // FETCHING ALLERGIES , IF FAMILY MEMBER ID IS NOT PRESENT, IT WILL BE DONE FOR THE REGISTERED MEMBER
     const fetchAllergies = async () => {
@@ -45,7 +45,7 @@ const AllergiesComponent = (props) => {
           (data.allergies)?setAllergies(data.allergies):setAllergies([]);
           console.log(data)
         }
-        
+
         else {
           console.error('Failed to fetch allergies.');
         }
@@ -53,7 +53,7 @@ const AllergiesComponent = (props) => {
         console.error('An error occurred while fetching allergies:', error);
       }
     };
-   
+
 
     fetchAllergies();
   },[]);
@@ -75,7 +75,7 @@ const AllergiesComponent = (props) => {
           body: JSON.stringify(
             allergies
           )
-        
+
          } );
 
       if (response.ok) {
@@ -137,8 +137,8 @@ const AllergiesComponent = (props) => {
         </Button>
      <Typography>
       allergies
-    
-    
+
+
      </Typography>
     </div>
   );
