@@ -10,7 +10,7 @@ function FamilyMemberForm(props) {
   const [relation, setRelation] = useState('');
 
   //CHANGE TOKEN
-  const refreshToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiYW5vdGhlcnRvbmV5MkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NjU2OTI2NiwiZXhwIjoxNjg2NTcyODY2LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.T2mJnjA9FcSXFDFKTHXX3lch3kEoY_A4rxDQm5uBcPw'
+  const refreshToken =process.env.REACT_APP_REFRESH_TOKEN
     const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -26,7 +26,7 @@ function FamilyMemberForm(props) {
 
     try {
       //CHANGE FETCH LINK ACCORDINGLY
-      const response = await fetch(`http://[::1]:3333/api/members/${props.value}/family-members`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${props.value}/family-members`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

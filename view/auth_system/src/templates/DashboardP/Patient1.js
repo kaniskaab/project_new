@@ -107,14 +107,14 @@ const val = String(location.state.data.user.name)
 
 
   //CHANGE TO VALID TOKEN
-  const refreshToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoic3RyaW5nQGdtYWlsLmNvbSIsImlhdCI6MTY4NjQ5MDAwMCwiZXhwIjoxNjg2NDkzNjAwLCJhdWQiOiJsb2NhbGhvc3Q6NDAwMCIsImlzcyI6ImxvY2FsaG9zdDo0MDAwIn0.iaen9am6YUJ1fS07kA85cJHVup3o5V-LOgdJBc14Zi8'
+  const refreshToken =process.env.REACT_APP_REFRESH_TOKEN
 
 // GET REQUEST TO GET ALL MEMBERS
   const userSubmit=async()=>
   {
     try {
       //CHANGE FETCH LINK ACCORDINGLY
-      const response = await fetch(`http://[::1]:3333/api/members/${allMember[0].id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0].id}`, {
         method:'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const val = String(location.state.data.user.name)
  const handleDelete = async (id)=>{
   try {
     //CHANGE FETCH LINK ACCORDINGLY
-    const response = await fetch(`http://[::1]:3333/api/members/${allMember[0].id}/family-member/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0].id}/family-member/${id}`, {
       method:'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ const val = String(location.state.data.user.name)
  const deleteUser=async ()=>{
   try {
     //CHANGE FETCH LINK ACCORDINGLY
-    const response = await fetch(`http://[::1]:3333/api/members/${allMember[0].id}`, {
+    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0].id}`, {
       method:'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -216,7 +216,7 @@ const val = String(location.state.data.user.name)
  const handlesubmit = () => {
   //GETTING INITIAL DETAILS
   //CHANGE FETCH LINK ACCORDINGLY
-   fetch(`http://[::1]:3333/api/users/${location.state.data.user.id}/profile`, {
+   fetch(`${process.env.REACT_APP_BASE_URL}/api/users/${location.state.data.user.id}/profile`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ const requestBody = {
 
 //PATCHING
 //CHNAGE FETCH LINK ACCORDINGLY
-   fetch(`http://[::1]:3333/api/users/${location.state.data.user.id}/profile`, {
+   fetch(`${process.env.REACT_APP_BASE_URL}/api/users/${location.state.data.user.id}/profile`, {
      method: 'PATCH',
      headers: {
        'Content-Type': 'application/json',

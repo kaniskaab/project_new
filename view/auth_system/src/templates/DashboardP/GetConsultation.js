@@ -11,14 +11,14 @@ const location=useLocation();
   //CHANGE TOKEN ACCORDINGLY
 
 
-  const refreshToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiYW5vdGhlcnRvbmV5MkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NjU2OTI2NiwiZXhwIjoxNjg2NTcyODY2LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.T2mJnjA9FcSXFDFKTHXX3lch3kEoY_A4rxDQm5uBcPw'
+  const refreshToken =process.env.REACT_APP_REFRESH_TOKEN
      const fetchDoctors = async () => {
   
 
 
     //GET ALL THE DOCTORS
     //CHANGE FETCH LINK ACCORDINGLY
-   const response= await fetch('http://[::1]:3333/api/doctors', {
+   const response= await fetch(`${process.env.REACT_APP_BASE_URL}/api/doctors`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const location=useLocation();
       fees: 0
     };
 //CHANGE FETCH LINK ACCORDINGLY
-    fetch('http://[::1]:3333/api/consultations', {
+    fetch(`${process.env.REACT_APP_BASE_URL}/api/consultations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

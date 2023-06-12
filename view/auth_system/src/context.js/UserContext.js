@@ -7,13 +7,14 @@ export const UserProvider = ({ children }) => {
   const[id,setId]=useState(0);
 
   //CHANGE TOKEN 
-  const refreshToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiYW5vdGhlcnRvbmV5MkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NjU2OTI2NiwiZXhwIjoxNjg2NTcyODY2LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.T2mJnjA9FcSXFDFKTHXX3lch3kEoY_A4rxDQm5uBcPw'
-         useEffect(() => {
+  const refreshToken = process.env.REACT_APP_REFRESH_TOKEN
+        useEffect(() => {
   //FETCHING ALL MEMBERS FROM THE API
     const fetchData = async () => {
       try {
         //CHANGE FETCH LINK ACCORDINGLY
-        const response = await fetch('http://[::1]:3333/api/members', {
+        console.log(process.env.REACT_APP_BASE_URL)
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members`, {
           method:'GET',
           headers: {
             'Content-Type': 'application/json',

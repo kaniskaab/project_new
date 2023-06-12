@@ -17,13 +17,13 @@ const AllergiesComponent = (props) => {
   const [newAllergy, setNewAllergy] = useState('');
 
   //CHANGE TOKEN 
-  const refreshToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiYW5vdGhlcnRvbmV5MkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY4NjU2OTI2NiwiZXhwIjoxNjg2NTcyODY2LCJhdWQiOiJsb2NhbGhvc3Q6ODAwMCIsImlzcyI6ImxvY2FsaG9zdDo4MDAwIn0.T2mJnjA9FcSXFDFKTHXX3lch3kEoY_A4rxDQm5uBcPw'
+  const refreshToken =process.env.REACT_APP_REFRESH_TOKEN
          useEffect(() => {
     // FETCHING ALLERGIES , IF FAMILY MEMBER ID IS NOT PRESENT, IT WILL BE DONE FOR THE REGISTERED MEMBER
     const fetchAllergies = async () => {
       try {
         const response = await fetch((props.fmId)?
-          `http://[::1]:3333/api/members/${props.value}/family-members`:`http://[::1]:3333/api/members/${props.new}`,{
+          `${process.env.REACT_APP_BASE_URL}/api/members/${props.value}/family-members`:`${process.env.REACT_APP_BASE_URL}/api/members/${props.new}`,{
             method:'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const AllergiesComponent = (props) => {
       console.log(allergies)
       //CHANGE LINK ACCORDINGLY
       const response = await fetch((props.fmId)?
-        `http://[::1]:3333/api/members/${props.value}/family-members/${props.fmId}/allergies`: `http://[::1]:3333/api/members/${props.new}/allergies`,
+        `${process.env.REACT_APP_BASE_URL}/api/members/${props.value}/family-members/${props.fmId}/allergies`: `${process.env.REACT_APP_BASE_URL}/api/members/${props.new}/allergies`,
         {
           method: 'POST',
           headers: {
@@ -94,7 +94,7 @@ const AllergiesComponent = (props) => {
     try {
       //CHANGE LINK ACCORINGLY
       const response = await fetch((props.fmId)?
-        `http://[::1]:3333/api/members/${props.value}/family-members/${props.fmId}/allergies`:`http://[::1]:3333/api/members/${props.new}/allergies`,
+        `${process.env.REACT_APP_BASE_URL}/api/members/${props.value}/family-members/${props.fmId}/allergies`:`${process.env.REACT_APP_BASE_URL}/api/members/${props.new}/allergies`,
         {
           method: 'DELETE',
           headers: {
