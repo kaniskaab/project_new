@@ -5,6 +5,7 @@ import Header from "./Header";
 const ViewAllergies = () => {
 
 
+ 
   const memberId = localStorage.getItem("userId")
   const refreshToken = localStorage.getItem("token")
   const [allergies,setAllergies] = useState([])
@@ -12,6 +13,7 @@ const ViewAllergies = () => {
   const [reportedBy, setReportedBy] = useState('');
   
   useEffect(() => {
+     document.title='Member Allergies'
     const fetchData = async () => {
       try {
         const response = await fetch(
@@ -103,7 +105,7 @@ const ViewAllergies = () => {
                 {(allergies!==null)? 
                 allergies.map(allergy=>
                       <li className="px-4 py-2 bg-white hover:bg-sky-100 hover:text-sky-900 border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out">
-                 {allergy.name} reported by {allergy.reportedBy}
+                 {allergy.allergy} reported by {allergy.reportedBy}
                 </li>
                   ):
                   <h1>no allergies</h1> }

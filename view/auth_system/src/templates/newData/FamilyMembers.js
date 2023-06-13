@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Sidebar from "./Sidebar";
 import { Link, useLocation } from "react-router-dom";
 import Header from "./Header";
 const FamilyMembers = () => {
   const location = useLocation();
+  useEffect(()=>{
+    document.title='Family Members'
+  },[])
   console.log(location);
   return (
     <div className="overflow-x-hidden">

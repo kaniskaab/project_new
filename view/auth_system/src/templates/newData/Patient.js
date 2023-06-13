@@ -10,6 +10,7 @@ const Patient = () => {
 
 
   useEffect(() => {
+    document.title='Member DashBoard'
     const fetchData = async () => {
       try {
         const response = await fetch(

@@ -5,6 +5,9 @@ import { Button } from "@mui/material";
 import Header from "./Header";
 const UpdateDetails = () => {
   const id = localStorage.getItem('id')
+  useState(()=>{
+    document.title='Member Details'
+  },[])
   return (
     <div>
       <Header />
