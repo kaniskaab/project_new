@@ -15,6 +15,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { UserContext } from "../context.js/UserContext";
 import { useNavigate } from "react-router-dom";
+import { Alert } from "@mui/material";
+import CancelIcon from '@mui/icons-material/Cancel';
 function Copyright(props) {
   return (
     <Typography
@@ -44,7 +46,12 @@ export default function SignIn() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("");  
+  const [alert, setAlert] = useState(false);
+
+  const handleAlert=()=>{
+    setAlert(false)
+  }
   async function handleSubmit(event) {
     event.preventDefault();
     const lnk = `${process.env.REACT_APP_BASE_URL}/api/auth/login`;
@@ -63,20 +70,23 @@ export default function SignIn() {
     console.log(data);
     if (data.accessToken && data.user.role==='user') {
       console.log(members)
-      navigate('/dashboard',{state:{members,data}});
+      navigate('/patient',{state:{members,data}});
       // window.location.href = "/dashboard";
       localStorage.setItem('token', data.accessToken)
       localStorage.setItem('refreshToken', data.refreshToken)
       localStorage.setItem('role', data.user.role)
+      localStorage.setItem('id',data.user.id)
+      localStorage.setItem('name',data.user.name)
     } else if ( data.accessToken &&  data.user.role === "doctor") {
       localStorage.setItem('token', data.accessToken)
       localStorage.setItem('refreshToken', data.refreshToken)
       localStorage.setItem('role', data.user.role)
-      window.location.href = "/dashboard2"; //TODO use routing
+      navigate('/dashboard2'); //TODO use routing
     } else {
 //      alert("Please check your username and password");
-      //TODO show mui alert, non modal, closeable with message.
+
       console.error('wrong password: ', data)
+      setAlert(true);
       localStorage.removeItem('token')
       localStorage.removeItem('refreshToken')
     }
@@ -94,6 +104,11 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
+          {alert ? <Alert severity='error'>Check email and password
+          <button onClick={handleAlert}>
+           < CancelIcon/>
+          </button>
+          </Alert> : <></> }
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -129,18 +144,6 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <TextField
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              margin="normal"
-              required
-              fullWidth
-              name="type"
-              label="User Type"
-              type="text"
-              id="type"
-              autoComplete="user-type"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

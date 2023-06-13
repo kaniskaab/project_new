@@ -11,10 +11,10 @@ const AllergiesComponent = (props) => {
 
 
 
-  const [allergies, setAllergies] = useState([
-    {allergy:"123",reportedBy:"Doctor"}]);
+  const [allergies, setAllergies] = useState([]);
   const[newReportedBy,setNewReportedBy]=useState('')
   const [newAllergy, setNewAllergy] = useState('');
+  console.log(props.fmId)
 
   //CHANGE TOKEN
   const refreshToken = localStorage.getItem('token')
@@ -30,20 +30,20 @@ const AllergiesComponent = (props) => {
             'Authorization': `Bearer ${refreshToken}`,
           }},
         );
+        const data = await response.json();
 
-        if (response.ok && props.fmId) {
-          const data = await response.json();
-          console.log(data);
+
+        if (data && props.fmId) {
           const filter = data.filter((d)=>(
             d.id===props.fmId
           ))
           console.log(filter)
-          (filter[0].allergies===null)?setAllergies([]):setAllergies(filter[0].allergies)
+
+          (filter[0].allergies===null)?setAllergies(null):setAllergies(filter[0].allergies)
         }
-        else if(response.ok){
+        else if(data){
           const data = await response.json();
           (data.allergies)?setAllergies(data.allergies):setAllergies([]);
-          console.log(data)
         }
 
         else {
@@ -60,10 +60,10 @@ const AllergiesComponent = (props) => {
 
   const handleAddAllergy = async () => {
     // Make POST request to add allergy
-    try {
+      try {
       allergies.push({allergy:newAllergy,reportedBy:newReportedBy})
-      console.log(allergies)
-      //CHANGE LINK ACCORDINGLY
+      console.log(allergies[0])
+      console.log(refreshToken)
       const response = await fetch((props.fmId)?
         `${process.env.REACT_APP_BASE_URL}/api/members/${props.value}/family-members/${props.fmId}/allergies`: `${process.env.REACT_APP_BASE_URL}/api/members/${props.new}/allergies`,
         {
@@ -73,17 +73,14 @@ const AllergiesComponent = (props) => {
             'Authorization': `Bearer ${refreshToken}`,
           },
           body: JSON.stringify(
-            allergies
+            [allergies[0]]
           )
 
          } );
+         const data = await response.json()
+         console.log(data);
 
-      if (response.ok) {
-       alert('allergyAdded')
-      } else {
-        alert('Not added')
-        console.error('Failed to add allergy.');
-      }
+
     } catch (error) {
       console.error('An error occurred while adding allergy:', error);
     }
@@ -103,14 +100,8 @@ const AllergiesComponent = (props) => {
           },
         }
       );
-      const data = await response
-
-      if (data.ok) {
-        console.log(response.json())
-        alert('deleted');
-      } else {
-        console.error('Failed to delete allergy.');
-      }
+      const data = await response.json()
+      console.log(data);
     } catch (error) {
       console.error('An error occurred while deleting allergy:', error);
     }
@@ -136,8 +127,16 @@ const AllergiesComponent = (props) => {
         Delete
         </Button>
      <Typography>
-      allergies
+      <ul>
+  {
+        allergies.map((allergy)=>(
+            <li>{allergy.allergy} reported by {allergy.reportedBy}</li>
+        ))
+      }
 
+
+      </ul>
+    
 
      </Typography>
     </div>

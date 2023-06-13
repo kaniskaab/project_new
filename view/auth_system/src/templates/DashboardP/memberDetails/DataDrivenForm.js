@@ -34,13 +34,8 @@ function FamilyMemberForm(props) {
         },
         body: JSON.stringify(familyMember),
       });
-
-      if (response.ok) {
-        console.log(response.json())
-        alert('Family member added successfully!');
-      } else {
-        console.error('Failed to add family member.');
-      }
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
       console.error('An error occurred while adding a family member:', error);
     }

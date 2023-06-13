@@ -6,19 +6,24 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import { Grid} from '@mui/material';
 import DetailPage from './DetailPage';
-import Title from './Title';
+import Title from '../Title';
 import { useLocation } from 'react-router-dom';
 
 
 
 
-export default function PersistentDrawerRight() {
+export default function MemberDetaisl() {
 
   const location = useLocation();
   console.log(location.state.value)
+
   const member = location.state.familyMembers;
   console.log(location.state.familyMembers)
-  const final = member[location.state.value-1];
+
+
+  const familyMember = location.state.familyMembers.filter((member)=>member.id===location.state.value)
+  console.log(familyMember);
+  const final = familyMember[0];
   console.log(final);
   console.log(final.id)
 

@@ -20,11 +20,12 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { TextField, Container } from "@mui/material";
-import { useState} from "react";
-import AddMember from "./AddMember";
-import DetailPage from "./DetailPage";
+import { useState } from "react";
+import AddMember from "./memberDetails/AddMember";
+import DetailPage from "./memberDetails/DetailPage";
 import Title from "./Title";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
+import { UserContext } from "../../context.js/UserContext";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -81,58 +82,44 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function Patient1() {
-
   const location = useLocation();
 
+  const accessToken = localStorage.getItem("token");
+  const { members } = React.useContext(UserContext);
+  const [findMember, setFindMember] = useState([]);
 
+  const userId = location.state.data.user.id;
 
-const [members,setMembers]=useState(location.state.members)
-
-const allMember = members.filter((member)=>
-(
-  member.user.id===location.state.data.user.id
-))
-
-const val = String(location.state.data.user.name)
-
-  const familyMembers = allMember[0]?.familyMembers
-  console.log(allMember[0])
-  const handleSubmit = (event) => {
-    const value = event;
-    const mainId= allMember[0]?.id;
-    navigate('/memberDetails',{state:{value,familyMembers,mainId}});
-  };
-
-
-
-
-  //CHANGE TO VALID TOKEN
-    const accessToken = localStorage.getItem('token')
-// GET REQUEST TO GET ALL MEMBERS
-  const userSubmit=async()=>
-  {
-    try {
-      //CHANGE FETCH LINK ACCORDINGLY
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0]?.id}`, {
-        method:'GET',
+  useState(async () => {
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}/api/users/${userId}`,
+      {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
           // Add other headers as needed
         },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch user data.');
       }
+    );
+    const data = await response.json();
+    console.log(data);
+  });
 
-      const userData = await response.json();
-      setMembers(userData);
-      console.log(userData);
-    } catch (error) {
-      console.error('An error occurred while fetching user data:', error);
-    }
-  }
+  const allMember = members.filter(
+    (member) => member.user.id === location.state.data.user.id
+  );
+
+  const val = String(location.state.data.user.name);
+
+  const familyMembers = allMember[0]?.familyMembers;
+  console.log(allMember[0]);
+  const handleSubmit = (event) => {
+    const value = event;
+    const mainId = allMember[0]?.id;
+    console.log(mainId);
+    navigate("/memberDetails", { state: { value, familyMembers, mainId } });
+  };
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -144,110 +131,111 @@ const val = String(location.state.data.user.name)
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const navigate=useNavigate();
-
+  const navigate = useNavigate();
 
   //DELETE A  FAMILY MEMBER
- const handleDelete = async (id)=>{
-  try {
-    //CHANGE FETCH LINK ACCORDINGLY
-    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0]?.id}/family-member/${id}`, {
-      method:'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-        // Add other headers as needed
-      },
-    });
+  const handleDelete = async (id) => {
+    try {
+      //CHANGE FETCH LINK ACCORDINGLY
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0]?.id}/family-member/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+            // Add other headers as needed
+          },
+        }
+      );
 
-    if (!response.ok) {
-      throw new Error('Failed to delete');
-    }
-
-    const data = await response.json();
-    console.log(data)
-    //alert('Member Deleted')
-  } catch (error) {
-    console.error('An error occurred while fetching user data:', error);
-  }
-
- }
-
- //DELETE USER
- const deleteUser=async ()=>{
-  try {
-    //CHANGE FETCH LINK ACCORDINGLY
-    const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0]?.id}`, {
-      method:'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-        // Add other headers as needed
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete');
-    }
-
-    const data = await response.json();
-    console.log(data)
-   // alert('Member Deleted')
-  } catch (error) {
-    console.error('An error occurred while fetching user data:', error);
-  }
- }
-
-
-
-
-
-//DONE TO PATCH USER DETAILS
-
-
-
- const [name, setName] = useState('');
- const [username, setUsername] = useState('');
- const [email, setEmail] = useState('');
- const [role, setRole] = useState('');
-  const [data, setData]= useState('');
-
- const handlesubmit = () => {
-  //GETTING INITIAL DETAILS
-  //CHANGE FETCH LINK ACCORDINGLY
-   fetch(`${process.env.REACT_APP_BASE_URL}/api/users/${location.state.data.user.id}/profile`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`,
-    }
-  })
-    .then(response => {
-      if (response.ok) {
-        setData(response.json())
-      } else {
-        //alert('Failed to update profile.');
+      if (!response.ok) {
+        throw new Error("Failed to delete");
       }
-    })
-    .catch(error => {
-      console.error('Failed to update profile:', error);
-      //alert('Failed to update profile.');
-    });
-};
 
-//UPDATING ALL EXCEPT MEMBERS AND DOCTORS
+      const data = await response.json();
+      console.log(data);
+      //alert('Member Deleted')
+    } catch (error) {
+      console.error("An error occurred while fetching user data:", error);
+    }
+  };
 
-const requestBody = {
-  name: name,
-  username: username,
-  email: email,
-  role: role,
-  member: data.member,
-  doctor: data.doctor
-};
+  //DELETE USER
+  const deleteUser = async () => {
+    try {
+      //CHANGE FETCH LINK ACCORDINGLY
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/api/members/${allMember[0]?.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+            // Add other headers as needed
+          },
+        }
+      );
 
-//PATCHING
-//CHNAGE FETCH LINK ACCORDINGLY
+      if (!response.ok) {
+        throw new Error("Failed to delete");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      // alert('Member Deleted')
+    } catch (error) {
+      console.error("An error occurred while fetching user data:", error);
+    }
+  };
+
+  //DONE TO PATCH USER DETAILS
+
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
+  const [data, setData] = useState("");
+
+  const handlesubmit = () => {
+    //GETTING INITIAL DETAILS
+    //CHANGE FETCH LINK ACCORDINGLY
+    fetch(
+      `${process.env.REACT_APP_BASE_URL}/api/users/${location.state.data.user.id}/profile`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          setData(response.json());
+        } else {
+          //alert('Failed to update profile.');
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to update profile:", error);
+        //alert('Failed to update profile.');
+      });
+  };
+
+  //UPDATING ALL EXCEPT MEMBERS AND DOCTORS
+
+  const requestBody = {
+    name: name,
+    username: username,
+    email: email,
+    role: role,
+    member: data.member,
+    doctor: data.doctor,
+  };
+
+  //PATCHING
+  //CHNAGE FETCH LINK ACCORDINGLY
   /* fetch(`${process.env.REACT_APP_BASE_URL}/api/users/${location.state.data.user.id}/profile`, {
      method: 'PATCH',
      headers: {
@@ -319,49 +307,49 @@ const requestBody = {
                   <AddMember value={allMember[0]?.id} />
                 </Item>
               </Grid>
-              <Grid item xs={12}
-            marginTop={2}
-            textAlign="center"
-        >
-          <Title>
-            <Typography variant="h4" align="center" fontWeight="bold" sx={{ marginTop: '20px' }}>
-                Update Details
-            </Typography>
-          </Title>
-      <Container>
-      <h1>User Profile</h1>
-      <div>
-        <TextField
-          label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <TextField
-          label="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <TextField
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          label="Role"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-        />
-        <Button variant="contained" onClick={handlesubmit}>
-          Update Profile
-        </Button>
-      </div>
-    </Container>
-        </Grid>
-        <Grid item xs={6}>
-        <Button onClick={deleteUser}>
-          Delete account?
-        </Button>
-        </Grid>
+              <Grid item xs={12} marginTop={2} textAlign="center">
+                <Title>
+                  <Typography
+                    variant="h4"
+                    align="center"
+                    fontWeight="bold"
+                    sx={{ marginTop: "20px" }}
+                  >
+                    Update Details
+                  </Typography>
+                </Title>
+                <Container>
+                  <h1>User Profile</h1>
+                  <div>
+                    <TextField
+                      label="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <TextField
+                      label="Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <TextField
+                      label="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                      label="Role"
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                    />
+                    <Button variant="contained" onClick={handlesubmit}>
+                      Update Profile
+                    </Button>
+                  </div>
+                </Container>
+              </Grid>
+              <Grid item xs={6}>
+                <Button onClick={deleteUser}>Delete account?</Button>
+              </Grid>
             </Grid>
           </Box>
         </Grid>
@@ -388,26 +376,24 @@ const requestBody = {
           </IconButton>
         </DrawerHeader>
         <List>
-          <Button onClick={userSubmit}>
-            Update Users
-          </Button>
-
           {allMember[0]?.familyMembers.map((member) => (
-              <ListItem key={member.id} disablePadding>
-                <ListItemButton onClick={()=>{handleSubmit(member.id)}}>
-                  <ListItemIcon>
-                    {member.id % 2 === 0 ? (
-                      <AccountCircleIcon />
-                    ) : (
-                      <AccountCircleIcon />
-                    )}
-                  </ListItemIcon>
-                     <ListItemText primary={member.name} />
-                     <Button onClick={()=> handleDelete(member.id)}>
-                          Delete
-                          </Button>
-                </ListItemButton>
-              </ListItem>
+            <ListItem key={member.id} disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  handleSubmit(member.id);
+                }}
+              >
+                <ListItemIcon>
+                  {member.id % 2 === 0 ? (
+                    <AccountCircleIcon />
+                  ) : (
+                    <AccountCircleIcon />
+                  )}
+                </ListItemIcon>
+                <ListItemText primary={member.name} />
+                <Button onClick={() => handleDelete(member.id)}>Delete</Button>
+              </ListItemButton>
+            </ListItem>
           ))}
         </List>
       </Drawer>
