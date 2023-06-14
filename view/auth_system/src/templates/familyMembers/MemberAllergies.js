@@ -1,56 +1,43 @@
 import React , {useEffect, useState} from "react";
 import Sidebar from "./Sidebar";
-import Header from "./Header";
-const ViewAllergies = () => {
+import Header from "../newData/Header";
+import { useLocation } from "react-router-dom";
+const MemberAllergies = () => {
 
 
  
   const memberId = localStorage.getItem("userId")
+  const familyMemberId = Number(localStorage.getItem("familyMemberId"));
+  console.log(familyMemberId)
   const refreshToken = localStorage.getItem("token")
   const [allergies,setAllergies] = useState([])
   const [allergy, setAllergy] = useState('');
   const [reportedBy, setReportedBy] = useState('');
-  
-  useEffect(() => {
-     document.title='Member Allergies'
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_BASE_URL}/api/members/${memberId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${refreshToken}`,
-            },
-          }
-        );
+  const location= useLocation();
+  console.log(location.state)
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data.");
-        }
-
-        const userData = await response.json();
-        console.log(userData);
-        const data = userData.allergies
-        
-       data===null?setAllergies(null):setAllergies(data);
-       console.log(allergies);
-
-      } catch (error) {
-        console.error("An error occurred while fetching user data:", error);
-        
-      }
-    };
-    fetchData();
-  }, []);
-
+  useState(()=>{
+    const fetchAllergies = async()=>{
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/family-members`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${refreshToken}`,
+        }})
+        const data = await response.json();
+        // console.log(data);
+        const details = data.filter((data)=>data.id===familyMemberId)
+        console.log(details[0].allergies)
+        setAllergies(details[0].allergies)
+    }
+    fetchAllergies();
+  },[])
 
   const handleAdd = async () => {
 
     const allergyDetail ={"allergy":allergy, "reportedBy":reportedBy}
     const arrayAllergy =[allergyDetail];
-    const lnk = `${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/allergies`;
+    const lnk = `${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/family-members/${familyMemberId}/allergies`;
     allergies===null?setAllergies(arrayAllergy):allergies.push(allergyDetail)
 
     const response = await fetch(lnk, {
@@ -73,7 +60,7 @@ const ViewAllergies = () => {
   const handleDelete =async () => {
    
 
-    const lnk = `${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/allergies`;
+    const lnk = `${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/family-member/${familyMemberId}/allergies`;
     const response = await fetch(lnk, {
       method: "DELETE",
       headers: {
@@ -150,4 +137,4 @@ const ViewAllergies = () => {
   );
 };
 
-export default ViewAllergies;
+export default MemberAllergies;

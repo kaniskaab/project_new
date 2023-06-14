@@ -1,29 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Delete } from './DeleteUser'
+import { Delete } from './DeleteMember'
 
-const Sidebar = () => {
+const Sidebar = (props) => {
+    console.log(props)
+    const memberDetails = props.memberDetails
   return (
    
     <div>
 <div>
       <nav className="flex flex-col  bg-blue-600 w-full h-screen px-4 tex-gray-900 border border-purple-900">
         <div className="mt-10 mb-4">
+        {/* {memberDetails.name} */}
           <ul className="ml-4">
-            <li className="mb-2 px-4 py-4 text-gray-100 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">
-              <span>
-                <svg className="fill-current h-5 w-5 " viewBox="0 0 24 24">
-                  <path
-                    d="M16 20h4v-4h-4m0-2h4v-4h-4m-6-2h4V4h-4m6
-                        4h4V4h-4m-6 10h4v-4h-4m-6 4h4v-4H4m0 10h4v-4H4m6
-                        4h4v-4h-4M4 8h4V4H4v4z"
-                  ></path>
-                </svg>
-              </span>
-              <Link link to="/updateDetails">
-                <span className="ml-2">Update Details</span>
-              </Link>
-            </li>
             <li className="mb-2 px-4 py-4 text-gray-100 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
               <span>
                 <svg
@@ -44,7 +33,7 @@ const Sidebar = () => {
                   />
                 </svg>
               </span>
-              <Link link to="/viewAllergies">
+              <Link link to="/memberAllergies">
                
                 <span className="ml-2">View Allergies</span>
               </Link>
@@ -59,9 +48,9 @@ const Sidebar = () => {
                   ></path>
                 </svg>
               </span>
-              <Link link to="/addMembers">
+              <Link link to="/viewconsultation">
                
-                <span className="ml-2">Add Members</span>
+                <span className="ml-2">View Consulations</span>
               </Link>
             </li>
             <li className="mb-2 px-4 py-4 text-gray-100 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
@@ -74,8 +63,8 @@ const Sidebar = () => {
                   ></path>
                 </svg>
               </span>
-              <Link link to="/familymembers">
-                <span className="ml-2">Family Members</span>
+              <Link link to="/memberBookConsultation">
+                <span className="ml-2">Book Consulations</span>
               </Link>
             </li>
             <li className="mb-2 px-4 py-4 text-gray-100 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
@@ -88,7 +77,6 @@ const Sidebar = () => {
                   ></path>
                 </svg>
               </span>
-              
                 <span className="ml-2"><Delete/></span>
 
             </li>

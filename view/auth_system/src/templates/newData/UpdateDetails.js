@@ -16,7 +16,6 @@ const UpdateDetails = () => {
           <Sidebar />
         </div>
         <div class="col-span-9 row-span-6 bg-blue-200 p-8">
-          {/* <!-- component --> */}
          <DataDrivenForm/>
         </div>
       </div>

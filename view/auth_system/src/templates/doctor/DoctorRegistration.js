@@ -3,13 +3,9 @@ import { Box, Button, Container, TextField, Typography } from '@mui/material';
 
 const DoctorRegistrationForm = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
+    userId: 0,
+    licenseNumber: '',
     specialization: '',
-    qualification: '',
-    experience: '',
   });
 
   const handleChange = (event) => {
@@ -19,11 +15,26 @@ const DoctorRegistrationForm = () => {
       [name]: value,
     }));
   };
-
-  const handleSubmit = (event) => {
+  const refreshToken= localStorage.getItem("token")
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Form Data:', formData);
-  };
+    console.log(formData)
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}/api/doctors`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${refreshToken}`,
+        },
+        body:JSON.stringify(
+          formData
+        )
+      }
+    ); 
+    const data = await response.json();
+    console.log(data)
+   };
 
   return (
     <Container maxWidth="sm">
@@ -40,9 +51,10 @@ const DoctorRegistrationForm = () => {
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
-            name="firstName"
-            label="First Name"
-            value={formData.firstName}
+            name="userId"
+            label="userId"
+            type="number"
+            value={formData.userId}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -50,30 +62,10 @@ const DoctorRegistrationForm = () => {
             required
           />
           <TextField
-            name="lastName"
-            label="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            required
-          />
-          <TextField
-            name="email"
-            label="Email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            required
-          />
-          <TextField
-            name="phone"
-            label="Phone"
-            value={formData.phone}
+            name="licenseNumber"
+            label="licenseNumber"
+            type="text"
+            value={formData.licenseNumber}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -83,27 +75,8 @@ const DoctorRegistrationForm = () => {
           <TextField
             name="specialization"
             label="Specialization"
+            type='text'
             value={formData.specialization}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            required
-          />
-          <TextField
-            name="qualification"
-            label="Qualification"
-            value={formData.qualification}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            required
-          />
-          <TextField
-            name="experience"
-            label="Experience"
-            value={formData.experience}
             onChange={handleChange}
             fullWidth
             margin="normal"

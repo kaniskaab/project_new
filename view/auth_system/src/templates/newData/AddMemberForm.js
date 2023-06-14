@@ -115,34 +115,37 @@ const ComponentMapper = () => {
       },
       {
         component: componentTypes.TEXT_FIELD,
-        name: 'username',
-        label: 'User Name',
+        name: 'age',
+        label: 'Age',
         isRequired: true,
+        type:Number,
         validate: [(value) => (!value || value.lenght === 0 ? 'Required' : undefined)],
       },
       {
         component: componentTypes.TEXT_FIELD,
-        name: 'password',
-        label: 'Password',
+        name: 'gender',
+        label: 'Gender',
+        type: 'gender',
         validate: [(value) => (!value || value.lenght === 0 ? 'Required' : undefined)],
-        customProp: true,
       },
       {
         component: componentTypes.TEXT_FIELD,
-        name: 'email',
-        label: 'Your email',
-        type: 'email',
-      },
-      {
-        component: componentTypes.TEXT_FIELD,
-        name: 'role',
-        label: 'Your role',
+        name: 'govtId',
+        label: 'Govt Id',
         type: 'text',
+        validate: [(value) => (!value || value.lenght === 0 ? 'Required' : undefined)],
       },
+      {
+        component: componentTypes.TEXT_FIELD,
+        name: 'relation',
+        label: 'Relationship',
+        type: 'text',
+        validate: [(value) => (!value || value.lenght === 0 ? 'Required' : undefined)],
+      }
+        
         
     ],
   };
-  
   const refreshToken= localStorage.getItem('token')
   const userId = localStorage.getItem('userId')
   return (
@@ -151,22 +154,22 @@ const ComponentMapper = () => {
         componentMapper={componentMapper}
         FormTemplate={FormTemplate}
         schema={schema}
-        onSubmit={async (values) =>  {
-              
-          const response = await fetch(
-            `${process.env.REACT_APP_BASE_URL}/api/users/${userId}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${refreshToken}`,
-              },
-              body:JSON.stringify(values)
-            }
-          ); 
-          const data = await response.json();
-          console.log(data)
-        }}
+        onSubmit={async(values) =>{
+            const response = await fetch(
+                `${process.env.REACT_APP_BASE_URL}/api/members/${userId}/family-members`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${refreshToken}`,
+                  },
+                  body:JSON.stringify(values)
+                }
+              ); 
+              const data = await response.json();
+              console.log(data)
+
+        } }
         onCancel={() => console.log('cancel action')}
       />
       <pre>{JSON.stringify(values)}</pre>
