@@ -15,7 +15,7 @@ const Consultation = () => {
   const [show, setShow] = useState([]);
   const [search, setSearch] = useState([]);
   useEffect(() => {
-    document.title = "Family Members";
+    document.title = "Book Consultation";
     const getMembers = async () => {
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/api/doctors`,

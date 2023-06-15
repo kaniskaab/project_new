@@ -7,10 +7,10 @@ const Sidebar = () => {
    
     <div>
 <div>
-      <nav className="flex flex-col  bg-blue-600 w-full h-screen px-4 tex-gray-900 border border-purple-900">
+      <nav className="flex flex-col bg-transparent w-full h-screen px-4 font-ubu">
         <div className="mt-10 mb-4">
           <ul className="ml-4">
-            <li className="mb-2 px-4 py-4 text-gray-100 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">
+            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">
               <span>
                 <svg className="fill-current h-5 w-5 " viewBox="0 0 24 24">
                   <path
@@ -24,7 +24,7 @@ const Sidebar = () => {
                 <span className="ml-2">Update Details</span>
               </Link>
             </li>
-            <li className="mb-2 px-4 py-4 text-gray-100 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
+            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
               <span>
                 <svg
                   className="fill-current h-5 w-5 "
@@ -49,7 +49,7 @@ const Sidebar = () => {
                 <span className="ml-2">View Allergies</span>
               </Link>
             </li>
-            <li className="mb-2 px-4 py-4 text-gray-100 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
+            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
               <span>
                 <svg className="fill-current h-5 w-5 " viewBox="0 0 24 24">
                   <path
@@ -64,7 +64,7 @@ const Sidebar = () => {
                 <span className="ml-2">Add Members</span>
               </Link>
             </li>
-            <li className="mb-2 px-4 py-4 text-gray-100 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
+            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
               <span>
                 <svg className="fill-current h-5 w-5" viewBox="0 0 24 24">
                   <path
@@ -78,7 +78,7 @@ const Sidebar = () => {
                 <span className="ml-2">Family Members</span>
               </Link>
             </li>
-            <li className="mb-2 px-4 py-4 text-gray-100 flex flex-row  border-gray-300 hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
+            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row  hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">
               <span>
                 <svg className="fill-current h-5 w-5 " viewBox="0 0 24 24">
                   <path

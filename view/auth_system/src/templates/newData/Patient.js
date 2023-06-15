@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useLocation } from "react-router-dom";
+import img from '../images/image3.png'
 const Patient = () => {
   const refreshToken = localStorage.getItem("token");
   const id = Number(localStorage.getItem('id')) 
@@ -48,25 +49,29 @@ const Patient = () => {
 
 
   return (
-    <div>
+    <div className="h-auto w-screen bg-no-repeat bg-cover bg-top" style={{backgroundImage:`url(${img})`}} >
       <Header />
       <div class="grid grid-rows-6 grid-cols-12  grid-flow-col gap-1">
-        <div class="row-span-6 col-span-3 bg-blue-400 ">
+        <div class="row-span-6 col-span-3 ">
           <Sidebar
           memberdata={data}
             id={id}
              />
         </div>
-        <div class="col-span-9 row-span-6 bg-blue-600 ">
-          <div className="text-4xl text-white text-center font-mono">
+        <div class="col-span-9 row-span-6 bg-transparent flex flex-col items-center h-full w-full">
+          <div className=" flex text-5xl text-[#132540] font-ubu w-1/2 text-transform:capitalise mt-10 items-center">
             Welcome {userName}
           </div>
-          <div className="grid grid-cols-2 grid-row-2 grid-flow-row">
-            <div className="row-span-1 col-span-1">
+          <div className="grid grid-cols-2 grid-row-2 grid-flow-col text-xl ">
+            <div className=" flex flex-col row-span-1 col-span-1 m-3 p-5 items-center hover:bg-gray-400 rounded-2xl ">
+              <h1 className="text-3xl font-ubu underline">General Information</h1>
               <div className="row-span-1 col-span-1">Gender: {data.gender}</div>
               <div className="row-span-1 col-span-1">Govt Id : {data.govtId}</div>
               <div className="row-span-1 col-span-1">Age: {data.age}</div>
               <div className="row-span-1 col-span-1"></div>
+            </div>
+            <div className="flex flex-col m-3 p-5 items-center hover:bg-gray-400 rounded-2xl">
+            <h1 className=" text-3xl font-ubu underline">Upcoming Consultation</h1>
             </div>
           </div>
         </div>
