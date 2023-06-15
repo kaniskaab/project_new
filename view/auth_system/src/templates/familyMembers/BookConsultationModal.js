@@ -1,12 +1,15 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 export default function BookConsultationModal(props) {
   const [showModal, setShowModal] = React.useState(false);
   const refreshToken= localStorage.getItem('token');
 
+
+
   const doctor_id= props.doctorId
   const userId = Number(localStorage.getItem('userId'));
   const familyMember_Id = Number(localStorage.getItem("familyMemberId"));
+  console.log(userId, familyMember_Id)
   const [formData, setFormData] = useState({
     doctorId:doctor_id,
     memberId:userId,

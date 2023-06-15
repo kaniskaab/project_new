@@ -41,15 +41,12 @@ const MemberBookConsultation = () => {
     const filterValue=search.filter(item=>item.specialization.toLowerCase().includes(e.target.value.toLowerCase())|| item.user.name.toLowerCase().includes(e.target.value.toLowerCase()))
      setDoctors(filterValue)
      setShow(filterValue)
+  
      
     }
   
     setFilter(e.target.value)
-
-
-
-
-  }
+   }
  
 
   return (
