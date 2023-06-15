@@ -4,7 +4,8 @@ import FormRenderer from '@data-driven-forms/react-form-renderer/form-renderer';
 import componentTypes from '@data-driven-forms/react-form-renderer/component-types';
 import useFieldApi from '@data-driven-forms/react-form-renderer/use-field-api';
 import useFormApi from '@data-driven-forms/react-form-renderer/use-form-api';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const formGroupStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -155,24 +156,40 @@ const ComponentMapper = () => {
         FormTemplate={FormTemplate}
         schema={schema}
         onSubmit={async(values) =>{
+          try{
             const response = await fetch(
-                `${process.env.REACT_APP_BASE_URL}/api/members/${userId}/family-members`,
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${refreshToken}`,
-                  },
-                  body:JSON.stringify(values)
-                }
-              ); 
-              const data = await response.json();
-              console.log(data)
+              `${process.env.REACT_APP_BASE_URL}/api/members/${userId}/family-members`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${refreshToken}`,
+                },
+                body:JSON.stringify(values)
+              }
+            ); 
+            const data = await response.json();
+            console.log(data)
+            if(response.ok)
+            {
+              toast.success("Member Added!")
+            }
+            else
+            {
+              toast.warn("Something Went Wrong")
+            }
+          }catch(err)
+            {
+              console.log(err)
+            }
 
+          
         } }
         onCancel={() => console.log('cancel action')}
       />
       <pre>{JSON.stringify(values)}</pre>
+      <ToastContainer />
+
     </div>
   );
 };

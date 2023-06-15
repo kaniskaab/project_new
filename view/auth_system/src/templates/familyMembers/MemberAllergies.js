@@ -2,6 +2,7 @@ import React , {useEffect, useState} from "react";
 import Sidebar from "./Sidebar";
 import Header from "../newData/Header";
 import { useLocation } from "react-router-dom";
+import { toast ,ToastContainer } from "react-toastify";
 const MemberAllergies = () => {
 
 
@@ -17,19 +18,23 @@ const MemberAllergies = () => {
   console.log(location.state)
 
   useState(()=>{
-    const fetchAllergies = async()=>{
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/family-members`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${refreshToken}`,
-        }})
-        const data = await response.json();
-        // console.log(data);
-        const details = data.filter((data)=>data.id===familyMemberId)
-        console.log(details[0].allergies)
-        setAllergies(details[0].allergies)
-    }
+      const fetchAllergies = async()=>{
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/family-members`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${refreshToken}`,
+          }})
+          const data = await response.json();
+          if(response.ok){
+              const details = data.filter((data)=>data.id===familyMemberId)
+          console.log(details[0].allergies)
+          setAllergies(details[0].allergies)}
+      
+          else {
+            console.log(data)
+          }    }
+        
     fetchAllergies();
   },[])
 
@@ -51,16 +56,24 @@ const MemberAllergies = () => {
       ]
       )})
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
+      if(response.ok)
+      {
+        toast.success('Allergy Added')
     setAllergy('');
     setReportedBy('');
+      }
+      else{
+        toast.warn(data.message)
+      }
+ 
     
   };
 
   const handleDelete =async () => {
    
 
-    const lnk = `${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/family-member/${familyMemberId}/allergies`;
+    const lnk = `${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/family-members/${familyMemberId}/allergies`;
     const response = await fetch(lnk, {
       method: "DELETE",
       headers: {
@@ -69,7 +82,17 @@ const MemberAllergies = () => {
       }})
       const data = await response.json();
       console.log(data);
-      window.location.reload()
+      if(response.ok)
+      {
+        toast.success("Allergies deleted !")
+    setAllergies([]);
+        }
+      else
+      {
+        toast.warn(data.message)
+        
+      }
+    
   };
 
   return (
@@ -133,6 +156,7 @@ const MemberAllergies = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

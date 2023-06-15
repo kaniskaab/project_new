@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Delete } from './DeleteMember'
-
+import { toast ,ToastContainer } from "react-toastify";
 const Sidebar = (props) => {
     console.log(props)
     const memberDetails = props.memberDetails
@@ -77,13 +77,17 @@ const Sidebar = (props) => {
                   ></path>
                 </svg>
               </span>
+
                 <span className="ml-2"><Delete/></span>
+          
+                
 
             </li>
           </ul>
         </div>
       </nav>
     </div>
+    <ToastContainer/>
     </div>
   )
 }

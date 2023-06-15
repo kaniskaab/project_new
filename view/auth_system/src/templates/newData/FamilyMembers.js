@@ -10,7 +10,7 @@ const FamilyMembers = () => {
   const memberId = localStorage.getItem("userId")
   const [family, setFamily] = useState([]);
   useEffect( ()=>{
-    document.title='Family Members'
+    document.title="Family Members"
     const getMembers=async()=>{
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/api/members/${memberId}/family-members`,

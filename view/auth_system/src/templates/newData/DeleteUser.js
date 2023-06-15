@@ -27,10 +27,21 @@ export const Delete = () =>
     }
     return(
     <Popup trigger={<button>Delete your Account?</button>} position="right center">
-    <div className='grid grid-cols-2 grid-rows-1 '>
-        <div className='row-span-1'><button onClick={HandleDelete} className='bg-red-500 px-5 rounded-xl text-xl'>Yes</button></div>
-        <div className='row-span-1'><button className='bg-green-500 px-5 rounded-xl text-xl'>No</button></div>
-    </div>
+     <div className="grid grid-cols-1 grid-rows-2 ">
+        
+        <div className="row-span-1">
+         Clicking on "Yes" will delete your Account ! 
+        </div>
+        <div className="row-span-1 justify-center items-center">
+          <button
+            onClick={HandleDelete}
+            className="bg-red-500 px-5 rounded-xl text-xl"
+            
+          >
+            Yes
+          </button>
+        </div>
+      </div>
   </Popup>
 )
   }

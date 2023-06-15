@@ -4,6 +4,7 @@ import FormRenderer from '@data-driven-forms/react-form-renderer/form-renderer';
 import componentTypes from '@data-driven-forms/react-form-renderer/component-types';
 import useFieldApi from '@data-driven-forms/react-form-renderer/use-field-api';
 import useFormApi from '@data-driven-forms/react-form-renderer/use-form-api';
+import { ToastContainer, toast } from 'react-toastify';
 
 const formGroupStyle = {
   display: 'flex',
@@ -166,10 +167,20 @@ const ComponentMapper = () => {
           ); 
           const data = await response.json();
           console.log(data)
+          if(response.ok)
+            {
+              toast.success(data.message)
+              console.log(data.message)
+            }
+            else
+            {
+              toast.warn("Something Went Wrong")
+            }
         }}
         onCancel={() => console.log('cancel action')}
       />
       <pre>{JSON.stringify(values)}</pre>
+      <ToastContainer/>
     </div>
   );
 };

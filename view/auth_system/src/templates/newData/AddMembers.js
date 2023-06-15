@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import ComponentMapper from './AddMemberForm'
 const AddMembers = () => {
+  useEffect(()=>
+  {
+    document.title='Add members';
+  },[])
   return (
     <div>
       <Header />

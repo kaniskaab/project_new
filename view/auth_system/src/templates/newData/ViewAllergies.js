@@ -1,6 +1,7 @@
 import React , {useEffect, useState} from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import { ToastContainer,toast } from "react-toastify";
 const ViewAllergies = () => {
 
 
@@ -65,8 +66,15 @@ const ViewAllergies = () => {
       )})
       const data = await response.json();
       console.log(data);
+      if(response.ok)
+      {
+        toast.success('Allergy Added')
     setAllergy('');
     setReportedBy('');
+      }
+      else{
+        toast.warn(data.message)
+      }
     
   };
 
@@ -82,8 +90,17 @@ const ViewAllergies = () => {
       }})
       const data = await response.json();
       console.log(data);
-      window.location.reload()
-  };
+      if(response.ok)
+      {
+        toast.success("Allergies deleted !")
+    setAllergies([]);
+        }
+      else
+      {
+        toast.warn(data.message)
+        
+      }
+      };
 
   return (
   
@@ -146,6 +163,7 @@ const ViewAllergies = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };
