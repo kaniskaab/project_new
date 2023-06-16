@@ -30,7 +30,7 @@ function App() {
           <Route path="/member" Component={Member} />
           <Route path="/memberAllergies" Component={MemberAllergies}/>
           <Route path="/memberBookConsultation" Component={MemberBookConsultation}/>
-          <Route path ="/addMembers" Component={AddMembers}/>\
+          <Route path ="/addMembers" Component={AddMembers}/>
           <Route path="/directConsultation" Component={Consultation}/>
         </Routes>
       </BrowserRouter>

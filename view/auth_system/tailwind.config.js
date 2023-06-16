@@ -9,6 +9,7 @@ module.exports = {
       fontFamily:{
         mono:"'Montserrat', serif",
         ubu:"'Ubuntu',serif",
+        dance:"'Dancing Script',serif"
       },
 
     },
