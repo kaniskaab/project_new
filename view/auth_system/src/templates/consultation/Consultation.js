@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import AsyncSelect from "react-select/async";
 import BookConsultationModal from "../familyMembers/BookConsultationModal";
 import Header from "../newData/Header";
+import { useNavigate } from "react-router-dom";
 const Consultation = () => {
   const refreshToken = localStorage.getItem("token");
   const memberId = localStorage.getItem("userId");
-
+  const navigate = useNavigate();
   const [members, setMember] = useState([]);
   const [inputValue, setValue] = useState("");
   const [selectedValue, setSelectedValue] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [filter, setFilter] = useState("");
-  // const [filterValue,setFilterValue] = useState([])
   const [show, setShow] = useState([]);
   const [search, setSearch] = useState([]);
   useEffect(() => {
@@ -78,6 +78,10 @@ const Consultation = () => {
     setMember(data);
     return data;
   };
+  const handleClick = ()=>
+  {
+   navigate("/doctorRegistration");
+  }
 
   return (
     <div>
@@ -131,7 +135,7 @@ const Consultation = () => {
                 ))
               ) : (
                 <h1>
-                  <button className="mt-2">Add Doctor</button>
+                  <button className="mt-2" onClick={handleClick}>Add Doctor</button>
                 </h1>
               )}
             </ul>

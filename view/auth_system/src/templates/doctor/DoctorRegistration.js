@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const DoctorRegistrationForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userId: 0,
     licenseNumber: '',
@@ -34,7 +37,21 @@ const DoctorRegistrationForm = () => {
     ); 
     const data = await response.json();
     console.log(data)
+    if(response.ok)
+    {
+      toast.success("Doctor Added Successfully!")
+      const nextPage= ()=>
+      {
+        navigate("/directConsultation");
+      }
+      setTimeout(nextPage,3000)
+    }
+    else
+    {
+      toast.warn("Doctor not added")
+    }
    };
+  
 
   return (
     <Container maxWidth="sm">
@@ -88,6 +105,7 @@ const DoctorRegistrationForm = () => {
           </Button>
         </form>
       </Box>
+        <ToastContainer/>
     </Container>
   );
 };

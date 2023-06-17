@@ -119,11 +119,6 @@ export default function BookConsultationModal(props) {
               </button>
             </div>
           </form>
-             {/* <div className="gird grid-cols-2 h-full w-full"> */}
-
-                {/* <div className="col-span-1">hello</div>
-                <div className="col-span-1"></div> */}
-             {/* </div> */}
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">

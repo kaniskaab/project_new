@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Header from '../newData/Header';
 import Sidebar from './Sidebar';
 import BookConsultationModal from './BookConsultationModal';
+import {useNavigate} from 'react-router-dom';
 const MemberBookConsultation = () => {
 
   const [doctors,setDoctors]=useState([]);
   const[filter,setFilter]=useState('');
-  // const [filterValue,setFilterValue] = useState([])
+  const navigate = useNavigate();
   const [show,setShow] = useState([]);
   const refreshToken= localStorage.getItem('token');
   const [search,setSearch] = useState([]);
@@ -47,7 +48,11 @@ const MemberBookConsultation = () => {
   
     setFilter(e.target.value)
    }
- 
+   
+   const handleClick = ()=>
+   {
+    navigate("/doctorRegistration");
+   }
 
   return (
     <div>
@@ -73,7 +78,7 @@ const MemberBookConsultation = () => {
                <BookConsultationModal doctorId={doctor.id}/>
               </li>
                 ):
-                <h1><button className='mt-2'>Add Doctor</button></h1> }
+                <h1><button className='mt-2' onClick={handleClick}>Add Doctor</button></h1> }
                 </ul>
            
           </div>
