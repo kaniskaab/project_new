@@ -15,8 +15,8 @@ export default function BookConsultationModal(props) {
     memberId:userId,
     familyMemberId:familyMember_Id,
     dateOfAppointment: "",
-    fees: "",
-    force:"true"
+    fees: 0,
+    force:"false"
   });
 
   const handleChange = (e) => {
@@ -28,6 +28,7 @@ export default function BookConsultationModal(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/api/consultations`,
         {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AsyncSelect from "react-select/async";
 import BookConsultationModal from "../familyMembers/BookConsultationModal";
+import BookConsultationModalSelf from "../familyMembers/BookConsultationModalSelf";
 import Header from "../newData/Header";
 import { useNavigate } from "react-router-dom";
 const Consultation = () => {
@@ -82,6 +83,10 @@ const Consultation = () => {
   {
    navigate("/doctorRegistration");
   }
+  const handleSelf =()=>
+  {
+    setSelectedValue({name:"self", id:0})
+  }
 
   return (
     <div>
@@ -99,10 +104,16 @@ const Consultation = () => {
             onChange={handleChange}
           />
           {selectedValue.length === 0 ? (
-            <h1>Select a member</h1>
+            <div>
+               <h1>Select a member</h1>
+               <h1>OR</h1>
+               <button onClick={handleSelf}>Book consultation for self</button>
+            </div>
+           
           ) : (
             <h1>
               Book Consultation for {selectedValue.name}{" "}
+            
               {localStorage.setItem("familyMemberId", selectedValue.id)}
             </h1>
           )}
@@ -127,7 +138,8 @@ const Consultation = () => {
                       {doctor.specialization}
                     </p>
                     {selectedValue.length !== 0 ? (
-                      <BookConsultationModal doctorId={doctor.id} />
+                      (selectedValue.id!==0)?<BookConsultationModal doctorId={doctor.id} />:<BookConsultationModalSelf doctorId={doctor.id}/>
+                      
                     ) : (
                       <></>
                     )}
