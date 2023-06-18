@@ -8,7 +8,8 @@ function Design() {
   const id = Number(localStorage.getItem("id"));
   const [data, setData] = useState({});
   //here data.id will give member id of the user
-  //id = user id
+  const memId= data.id
+  localStorage.setItem("userId",memId)
   const [family, setFamily] = useState([]);
 
   useEffect(() => {
@@ -95,7 +96,7 @@ function Design() {
               <div className="row-span-1 col-span-1">Age: {data.age}</div>
             </div>
             <div className=" flex flex-row justify-center items-center col-start-2 col-span-7 row-start-6 bg-blue-50">
-              <button className="h-1/4 w-1/2 my-5 bg-gray-400 rounded-2xl hover:bg-gray-600 mx-2" onClick={selfConsult}>
+              <button className="h-1/4 w-1/3 my-5 bg-gray-400 rounded-2xl hover:bg-gray-600 mx-2" onClick={selfConsult}>
                 Consultation
               </button>
               <button className="h-1/4 w-1/2 my-5 bg-gray-400 rounded-2xl hover:bg-gray-600 mx-2" onClick={()=>
@@ -103,6 +104,15 @@ function Design() {
                 navigate('/updateDetails')
             }}>
                 Edit
+              </button>
+              <button className="h-1/4 w-1/3 my-5 bg-gray-400 rounded-2xl hover:bg-gray-600 mx-2" onClick={()=>
+            {
+                navigate('/viewAllergies')
+            }}>
+                Allergies
+              </button>
+              <button>
+
               </button>
             </div>
           </div>
