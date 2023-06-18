@@ -5,6 +5,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [members, setMembers] = useState([]);
   const[id,setId]=useState(0);
+  const[doctors, setDoctors] = useState([])
 
   //CHANGE TOKEN
   const refreshToken = localStorage.getItem('token')
@@ -29,16 +30,33 @@ export const UserProvider = ({ children }) => {
         const userData = await response.json();
         setMembers(userData);
         console.log(userData);
+
+        const response2 = await fetch(
+          `${process.env.REACT_APP_BASE_URL}/api/doctors`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          }
+        );
+        const data = await response2.json();
+        console.log(data);
+        setDoctors(data);
       } catch (error) {
         console.error('An error occurred while fetching user data:', error);
       }
+
     };
+
+    
 
     fetchData();
   }, []);
 
   return (
-    <UserContext.Provider value={{members}}>
+    <UserContext.Provider value={{members, doctors}}>
       {children}
     </UserContext.Provider>
   );

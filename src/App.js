@@ -14,6 +14,9 @@ import MemberAllergies from "./templates/familyMembers/MemberAllergies";
 import MemberBookConsultation from "./templates/familyMembers/MemberBookConsultation";
 import AddMembers from "./templates/newData/AddMembers";
 import Consultation from "./templates/consultation/Consultation";
+import Design from "./templates/newData/Design";
+import BookC from "./templates/newData/BookC";
+import BookCSelf from "./templates/newData/BookCSelf";
 function App() {
   return (
     <>
@@ -32,6 +35,9 @@ function App() {
           <Route path="/memberBookConsultation" Component={MemberBookConsultation}/>
           <Route path ="/addMembers" Component={AddMembers}/>
           <Route path="/directConsultation" Component={Consultation}/>
+          <Route path='/design' Component={Design}/>
+          <Route path ='/getConsultation' Component={BookC}/>
+          <Route path ='/getConsultationSelf' Component={BookCSelf}/>
         </Routes>
       </BrowserRouter>
     </>

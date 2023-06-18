@@ -38,7 +38,7 @@ const errorStyle = {
 
 const getButtonStyle = (variant) => ({
   color: 'White',
-  backgroundColor: variant === 'primary' ? 'RebeccaPurple' : '#888',
+  backgroundColor: variant === 'primary' ? 'blue' : '#888',
   padding: '8px 16px',
   borderRadius: 4,
   cursor: 'pointer',
@@ -147,7 +147,7 @@ const ComponentMapper = () => {
   const refreshToken= localStorage.getItem('token')
   const userId = localStorage.getItem('userId')
   return (
-    <div>
+    <div className='h-3/4 w-2/3 border border-blue-500 p-5 overflow-scroll'>
       <FormRenderer
         componentMapper={componentMapper}
         FormTemplate={FormTemplate}
