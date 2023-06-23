@@ -15,15 +15,8 @@ const Header = () => {
             </Link>
           </div>
           <div>
-            <Link link to="/patient" className="m-2  hover:text-blue-900 text-white">
+            <Link link to="/design1" className="m-2  hover:text-blue-100 text-white">
               Home
-            </Link>
-            <Link
-              link
-              to="/directConsultation"
-              className="m-2 hover:text-blue-900 text-white" 
-            >
-              Get Consultation
             </Link>
           </div>
         </div>

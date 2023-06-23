@@ -1,4 +1,3 @@
-/* eslint react/prop-types: "off" */
 import React, { useState } from 'react';
 import FormRenderer from '@data-driven-forms/react-form-renderer/form-renderer';
 import componentTypes from '@data-driven-forms/react-form-renderer/component-types';
@@ -147,7 +146,7 @@ const ComponentMapper = () => {
   const refreshToken= localStorage.getItem('token')
   const userId = localStorage.getItem('userId')
   return (
-    <div className='h-3/4 w-2/3 border border-blue-500 p-5 overflow-scroll'>
+    <div className='h-full w-full overflow-scroll'>
       <FormRenderer
         componentMapper={componentMapper}
         FormTemplate={FormTemplate}

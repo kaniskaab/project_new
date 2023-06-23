@@ -70,7 +70,7 @@ export default function SignIn() {
     console.log(data);
     if (data.accessToken && data.user.role==='user') {
       console.log(members)
-      navigate('/design',{state:{members,data}});
+      navigate('/design1',{state:{members,data}});
       // window.location.href = "/dashboard";
       localStorage.setItem('token', data.accessToken)
       localStorage.setItem('refreshToken', data.refreshToken)

@@ -1,25 +1,34 @@
 import React, { useState } from "react";
-import Sidebar from "./Sidebar";
-import SidebarN from "./SidebarN";
-import DataDrivenForm from './DataDrivenForm'
-import { Button } from "@mui/material";
+import { Grid, Button, Typography, Box, Container, Paper } from "@mui/material";
+import Sidebar from './Sidebar'
+import DataDrivenForm from './DataDrivenForm';
 import Header from "./Header";
 
 const UpdateDetails = () => {
-  const id = localStorage.getItem('id')
-  useState(()=>{
-    document.title='Member Details'
-  },[])
+  const id = localStorage.getItem('id');
+  useState(() => {
+    document.title = 'Member Details';
+  }, []);
+
   return (
-    <div className="overflow-y-hidden">
-      <div class="grid grid-rows-6 grid-cols-12 grid-flow-col gap-1 bg-no-repeat bg-cover font-mono overflow-hidden">
-        <div class="row-span-6 col-span-3 bg-transparent ">
-          <SidebarN />
-        </div>
-        <div class="col-span-9 row-span-6 bg-transparent p-8">
-         <DataDrivenForm/>
-        </div>
-      </div>
+    <div>
+      <Header />
+      <Container maxWidth="lg">
+        <Grid container spacing={2}>
+          <Grid item xs={3} style={{height:"100vh"}}>
+
+                <Sidebar/>
+     
+          </Grid>
+          <Grid item xs={9}>
+            <Paper elevation={3}>
+              <Box p={4}>
+                <DataDrivenForm />
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
     </div>
   );
 };

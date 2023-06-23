@@ -17,6 +17,7 @@ import Consultation from "./templates/consultation/Consultation";
 import Design from "./templates/newData/Design";
 import BookC from "./templates/newData/BookC";
 import BookCSelf from "./templates/newData/BookCSelf";
+import Design1 from "./templates/newData/Design1";
 function App() {
   return (
     <>
@@ -38,6 +39,7 @@ function App() {
           <Route path='/design' Component={Design}/>
           <Route path ='/getConsultation' Component={BookC}/>
           <Route path ='/getConsultationSelf' Component={BookCSelf}/>
+          <Route path ='/design1' Component={Design1}/>
         </Routes>
       </BrowserRouter>
     </>

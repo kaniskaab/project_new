@@ -72,6 +72,13 @@ function Design() {
     navigate("/getConsultationSelf", {state:{data}})
   }
 
+const getAllergy = (member)=>
+{
+  const id = member.id;
+  localStorage.setItem("familyMemberId",id);
+  navigate("/memberAllergies")
+}
+
   return (
     <div>
       <div className="grid grid-cols-10 grid-flow-row grid-rows-2 h-screen w-screen overflow-hidden">
@@ -130,6 +137,9 @@ function Design() {
 
                   <button onClick={()=>getC(member)} className="text-blue-500 ml-auto mx-2">
                     Consult
+                  </button>
+                  <button onClick={()=>getAllergy(member)} className="text-blue-500 ml-auto mx-2">
+                    Allergy
                   </button>
                 </li>
               ))}

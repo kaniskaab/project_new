@@ -1,16 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Delete } from './DeleteUser'
+import { Paper } from '@mui/material'
 
 const Sidebar = () => {
   return (
    
     <div>
 <div>
+  <Paper >
       <nav className="flex flex-col bg-transparent w-full h-screen px-4 font-ubu">
         <div className="mt-10 mb-4">
           <ul className="ml-4">
-            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">
+            {/* <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">
               <span>
                 <svg className="fill-current h-5 w-5 " viewBox="0 0 24 24">
                   <path
@@ -23,8 +25,8 @@ const Sidebar = () => {
               <Link link to="/updateDetails">
                 <span className="ml-2">Update Details</span>
               </Link>
-            </li>
-            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
+            </li> */}
+            {/* <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
               <span>
                 <svg
                   className="fill-current h-5 w-5 "
@@ -48,8 +50,8 @@ const Sidebar = () => {
                
                 <span className="ml-2">View Allergies</span>
               </Link>
-            </li>
-            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
+            </li> */}
+            {/* <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
               <span>
                 <svg className="fill-current h-5 w-5 " viewBox="0 0 24 24">
                   <path
@@ -63,7 +65,7 @@ const Sidebar = () => {
                
                 <span className="ml-2">Add Members</span>
               </Link>
-            </li>
+            </li> */}
             <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
               <span>
                 <svg className="fill-current h-5 w-5" viewBox="0 0 24 24">
@@ -74,8 +76,8 @@ const Sidebar = () => {
                   ></path>
                 </svg>
               </span>
-              <Link link to="/familymembers">
-                <span className="ml-2">Family Members</span>
+              <Link link to="/ConsultationView">
+                <span className="ml-2">View Consultation</span>
               </Link>
             </li>
             <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row  hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">
@@ -94,9 +96,10 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
-      </nav>
+      </nav> </Paper>
     </div>
     </div>
+ 
   )
 }
 
