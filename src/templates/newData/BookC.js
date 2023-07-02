@@ -6,6 +6,8 @@ import { UserContext } from '../../context.js/UserContext';
 import { Grid, Typography, TextField, Button, Paper, List, ListItem } from '@mui/material';
 import Header from './Header';
 import { CalendarToday, Search, PersonAdd } from '@mui/icons-material';
+import Autocomplete from "@mui/material/Autocomplete";
+
 
 const BookC = () => {
   const location = useLocation();
@@ -99,6 +101,17 @@ const BookC = () => {
       toast.warn(data.message);
     }
   };
+  const flatProps = {
+    options: doctors.map((option) => option.user.name),
+  };
+  const [value, setValue] = React.useState(null);
+
+  const Handle = (e, newValue)=>
+  {
+    setValue(newValue)
+    doctors.map((doctor)=>doctor.user.name===newValue?setDoctorId(doctor.id):"")
+  }
+
 
   return (
     <>
@@ -147,23 +160,20 @@ const BookC = () => {
               <Typography variant="h6" gutterBottom>
                 Search Doctor
               </Typography>
-              <TextField
-                fullWidth
-                type="text"
-                value={searchTerm}
-                onChange={handleInputChange}
-                placeholder="Search..."
-                InputProps={{
-                  startAdornment: <Search />,
-                }}
-              />
-              <List>
-                {suggestions.map((user) => (
-                  <ListItem key={user.id} onClick={() => handleSuggestionClick(user)}>
-                    {user.user.name} specialized in {user.specialization}
-                  </ListItem>
-                ))}
-              </List>
+              <Autocomplete
+                    {...flatProps}
+                    id="controlled-demo"
+                    value={value}
+                    onChange={(event, newValue) => {Handle(event,newValue)
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Select Doctor"
+                        variant="standard"
+                      />
+                    )}
+                  />
             </Paper>
           </Grid>
           <Grid item xs={12}>
