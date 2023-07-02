@@ -12,7 +12,33 @@ const BookC = () => {
   const refreshToken = localStorage.getItem('token');
   console.log(location.state.details);
   const details = location.state.details;
-  const { doctors } = useContext(UserContext);
+  const [doctors, setDoctors]=useState([]);
+  useEffect( ()=>{
+  const fetchData = async()=>
+  {
+    try{
+      const response2 = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/api/doctors`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        }
+      );
+      const data = await response2.json();
+      console.log(data);
+      setDoctors(data);
+
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+  fetchData();
+ },[])
+
 
   const userName = localStorage.getItem('name');
   const [date, setDate] = useState('');
