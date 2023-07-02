@@ -38,7 +38,7 @@ const errorStyle = {
 
 const getButtonStyle = (variant) => ({
   color: 'White',
-  backgroundColor: variant === 'primary' ? 'RebeccaPurple' : '#888',
+  backgroundColor: variant === 'primary' ? 'blue' : '#888',
   padding: '8px 16px',
   borderRadius: 4,
   cursor: 'pointer',

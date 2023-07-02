@@ -51,7 +51,7 @@ const Sidebar = () => {
                 <span className="ml-2">View Allergies</span>
               </Link>
             </li> */}
-            {/* <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
+            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">
               <span>
                 <svg className="fill-current h-5 w-5 " viewBox="0 0 24 24">
                   <path
@@ -65,8 +65,8 @@ const Sidebar = () => {
                
                 <span className="ml-2">Add Members</span>
               </Link>
-            </li> */}
-            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded rounded-lg">
+            </li>
+            <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">
               <span>
                 <svg className="fill-current h-5 w-5" viewBox="0 0 24 24">
                   <path

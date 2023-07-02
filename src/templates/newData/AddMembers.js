@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
+import {Grid, Paper, Box, Container} from '@mui/material'
 import ComponentMapper from './AddMemberForm'
 const AddMembers = () => {
   useEffect(()=>
@@ -10,16 +11,24 @@ const AddMembers = () => {
   return (
     <div>
       <Header />
-      <div class="grid grid-rows-6 grid-cols-12  grid-flow-col gap-1">
-        <div class="row-span-6 col-span-3 bg-blue-400 ">
-          <Sidebar />
-        </div>
-        <div class="col-span-9 row-span-6 bg-blue-200 ">
-            <ComponentMapper/>
-        </div>
+      <Container maxWidth="lg">
+        <Grid container spacing={2}>
+          <Grid item xs={3} style={{height:"100vh"}}>
+
+                <Sidebar/>
+     
+          </Grid>
+          <Grid item xs={9}>
+            <Paper elevation={3}>
+              <Box p={4}>
+                <ComponentMapper />
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
     </div>
-    </div>
-  )
+  );
 }
 
 export default AddMembers
