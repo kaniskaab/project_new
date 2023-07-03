@@ -30,11 +30,10 @@ const ViewAllergies = () => {
         }
 
         const userData = await response.json();
-        console.log(userData);
         const data = userData.allergies;
 
         data === null ? setAllergies([]) : setAllergies(data);
-        console.log(allergies);
+        // console.log(allergies);
       } catch (error) {
         console.error("An error occurred while fetching user data:", error);
       }

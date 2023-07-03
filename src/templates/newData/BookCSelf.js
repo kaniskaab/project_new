@@ -97,6 +97,7 @@ const BookCSelf = () => {
   const Handle = (e, newValue)=>
   {
     console.log(newValue)
+    setValue(newValue)
     doctors.map((doctor)=>doctor.user.name===newValue?setDoctorId(doctor.id):"")
   }
 
@@ -184,7 +185,7 @@ const BookCSelf = () => {
                   <Typography variant="h6">Self</Typography>
                   <Typography variant="subtitle1">on</Typography>
                   <Typography variant="h6">
-                    {date} with {searchTerm}
+                    {date} with {value}
                   </Typography>
                   <Button
                     variant="contained"

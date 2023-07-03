@@ -1,31 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Typography, Container, Paper, Grid } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import React, { useState, useEffect } from "react";
+import { Button, Typography, Container, Paper, Grid } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import Header from "./Header";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 
 const Design1 = () => {
   const navigate = useNavigate();
-  const refreshToken = localStorage.getItem('token');
-  const id = Number(localStorage.getItem('id'));
+  const refreshToken = localStorage.getItem("token");
+  const id = Number(localStorage.getItem("id"));
   const [data, setData] = useState({});
   const [family, setFamily] = useState([]);
+  const userId = data.id;
+  localStorage.setItem("userId",userId)
+
 
   useEffect(() => {
-    document.title = 'Member Dashboard';
+    document.title = "Member Dashboard";
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${refreshToken}`,
-          },
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_BASE_URL}/api/members`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          }
+        );
 
         if (!response.ok) {
-          throw new Error('Failed to fetch user data.');
+          throw new Error("Failed to fetch user data.");
         }
 
         const userData = await response.json();
@@ -34,45 +40,51 @@ const Design1 = () => {
 
         const filteredData = userData.filter((data) => data.user.id === id);
         console.log(filteredData[0]);
+        setFamily(filteredData[0].familyMembers)
         setData(filteredData[0]);
       } catch (error) {
-        console.error('An error occurred while fetching user data:', error);
+        console.error("An error occurred while fetching user data:", error);
       }
     };
+    // const getMembers = async () => {
+    //   try {
+    //     const response1 = await fetch(
+    //       `${process.env.REACT_APP_BASE_URL}/api/members/${userId}/family-members`,
+    //       {
+    //         method: "GET",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           Authorization: `Bearer ${refreshToken}`,
+    //         },
+    //       }
+    //     );
+    //     const data = await response1.json();
+    //     console.log(data);
+    //     setFamily(data);
+    //   } catch (error) {
+    //     console.log("error  is" + error);
+    //   }
+    // };
+
     fetchData();
+    // getMembers();
   }, []);
 
-  const userName = localStorage.getItem('name');
-  const userId = data.id;
-
-  const getMembers = async () => {
-    const response = await fetch(
-      `${process.env.REACT_APP_BASE_URL}/api/members/${userId}/family-members`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${refreshToken}`,
-        },
-      }
-    );
-    const data = await response.json();
-    console.log(data);
-    setFamily(data);
-  };
+  const userName = localStorage.getItem("name");
 
   const getC = (details) => {
-    navigate('/getConsultation', { state: { details } });
+    navigate("/getConsultation", { state: { details } });
   };
 
   const selfConsult = () => {
-    navigate('/getConsultationSelf', { state: { data } });
+    navigate("/getConsultationSelf", { state: { data } });
   };
 
   const getAllergy = (member) => {
     const id = member.id;
-    localStorage.setItem('familyMemberId', id);
-    navigate('/memberAllergies');
+    console.log(member)
+    localStorage.setItem("familyMemberId", id);
+    navigate("/memberAllergies");
   };
 
   return (
@@ -80,18 +92,17 @@ const Design1 = () => {
       <Header />
       <Container maxWidth="lg">
         <Grid container>
-        <Grid item xs={3}>
-            <div className='-ml-20'>
-                    <Sidebar/>
+          <Grid item xs={3}>
+            <div className="-ml-20">
+              <Sidebar />
             </div>
-      
-        </Grid>
+          </Grid>
           <Grid item xs={9}>
             <Paper
               elevation={3}
               style={{
-                padding: '16px',
-                backgroundColor: '#fff',
+                padding: "16px",
+                backgroundColor: "#fff",
               }}
             >
               <Typography variant="h4" align="center">
@@ -110,13 +121,19 @@ const Design1 = () => {
                 Age: {data.age}
               </Typography>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "16px",
+                }}
+              >
                 <Button
                   fullWidth
                   variant="contained"
                   color="primary"
                   onClick={selfConsult}
-                  style={{ marginRight: '8px' }}
+                  style={{ marginRight: "8px" }}
                 >
                   Consultation
                 </Button>
@@ -125,9 +142,9 @@ const Design1 = () => {
                   variant="contained"
                   color="primary"
                   onClick={() => {
-                    navigate('/updateDetails');
+                    navigate("/updateDetails");
                   }}
-                  style={{ marginRight: '8px' }}
+                  style={{ marginRight: "8px" }}
                 >
                   Edit
                 </Button>
@@ -136,7 +153,7 @@ const Design1 = () => {
                   variant="contained"
                   color="primary"
                   onClick={() => {
-                    navigate('/viewAllergies');
+                    navigate("/viewAllergies");
                   }}
                 >
                   Allergies
@@ -146,25 +163,26 @@ const Design1 = () => {
             <Paper
               elevation={0}
               style={{
-                marginTop: '16px',
-                backgroundColor: '#fff',
-                padding: '16px',
+                marginTop: "16px",
+                backgroundColor: "#fff",
+                padding: "16px",
               }}
             >
-              <Button fullWidth variant="contained" color="primary" onClick={getMembers}>
+              <Button fullWidth variant="contained" color="primary">
                 Dependents
               </Button>
               <ul>
-                {family.map((member) => (
-                  <li key={member.id} style={{ marginBottom: '16px' }}>
+                {console.log(family)}
+                { family && family.map((member) => (
+                  <li key={member.id} style={{ marginBottom: "16px" }}>
                     <Paper
                       elevation={3}
                       style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '16px',
-                        backgroundColor: '#fff',
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "16px",
+                        backgroundColor: "#fff",
                       }}
                     >
                       <div>
@@ -172,14 +190,28 @@ const Design1 = () => {
                           <AssignmentIndIcon />
                           <Typography variant="h6">{member.name}</Typography>
                         </div>
-                        <Typography variant="body1">{member.relation}</Typography>
+                        <Typography variant="body1">
+                          {member.relation}
+                        </Typography>
+                        <Typography variant="body1">
+                          {member.govtId}
+                        </Typography>
+                        <Typography variant="body1" className=" m-2 rounded-[5px] shadow-md">
+                          {console.log(member.allergies)}
+                          {member.allergies && member.allergies.map(allergy=>
+                            (
+                              <ul>
+                                <li>{allergy.allergy} reported by {allergy.reportedBy}</li>
+                              </ul>
+                            ))}
+                        </Typography>
                       </div>
                       <div>
                         <Button
                           variant="outlined"
                           color="primary"
                           onClick={() => getC(member)}
-                          style={{ marginRight: '8px' }}
+                          style={{ marginRight: "8px" }}
                         >
                           Consult
                         </Button>

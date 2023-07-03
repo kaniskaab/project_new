@@ -6,6 +6,7 @@ import useFieldApi from '@data-driven-forms/react-form-renderer/use-field-api';
 import useFormApi from '@data-driven-forms/react-form-renderer/use-form-api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {  useNavigate } from 'react-router-dom';
 const formGroupStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -149,6 +150,7 @@ const ComponentMapper = () => {
   };
   const refreshToken= localStorage.getItem('token')
   const userId = localStorage.getItem('userId')
+  const navigate=useNavigate();
   return (
     <div>
       <FormRenderer
@@ -173,6 +175,8 @@ const ComponentMapper = () => {
             if(response.ok)
             {
               toast.success("Member Added!")
+              navigate('/design1')
+
             }
             else
             {

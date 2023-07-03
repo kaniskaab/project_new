@@ -12,8 +12,10 @@ import Autocomplete from "@mui/material/Autocomplete";
 const BookC = () => {
   const location = useLocation();
   const refreshToken = localStorage.getItem('token');
-  console.log(location.state.details);
   const details = location.state.details;
+  console.log(location.state.details);
+  const userId = localStorage.getItem("userId")
+
   const [doctors, setDoctors]=useState([]);
   useEffect( ()=>{
   const fetchData = async()=>
@@ -69,7 +71,7 @@ const BookC = () => {
     e.preventDefault();
     const formData = {
       doctorId: doctorId,
-      memberId: details.memberRelatedTo.id,
+      memberId: userId,
       familyMemberId: details.id,
       dateOfAppointment: date,
       fees: 0,
@@ -185,7 +187,7 @@ const BookC = () => {
               <Typography variant="h6">{details.name}</Typography>
               <Typography variant="subtitle1">on</Typography>
               <Typography variant="h6">
-                {date} with {searchTerm}
+                {date} with {value}
               </Typography>
               <Button
                 variant="contained"
