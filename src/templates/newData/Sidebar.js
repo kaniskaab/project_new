@@ -76,7 +76,7 @@ const Sidebar = () => {
                   ></path>
                 </svg>
               </span>
-              <Link link to="/ConsultationView">
+              <Link link to="/showConsultation">
                 <span className="ml-2">View Consultation</span>
               </Link>
             </li>

@@ -7,6 +7,9 @@ export default function ShowConsultation() {
     const refreshToken = localStorage.getItem('token');
     const userId = Number(localStorage.getItem("id"))
     const [user,setUser]=useState('')
+    const [qr,setQr]=useState('')
+    const [showQr, setShowQr]=useState(false)
+    const [blob, setBlob]=useState('')
     
     const [consultations, setConsultations]=useState([])
   
@@ -25,7 +28,6 @@ export default function ShowConsultation() {
           }
         );
         const data = await response2.json();
-        console.log(data);
         setUser(data);
 
         const response = await fetch(
@@ -39,7 +41,6 @@ export default function ShowConsultation() {
               }
         )
         const consult= await response.json()
-        console.log(consult)
         const filtered= consult.filter((e)=>e.createdBy===userId)
         console.log(filtered)
         setConsultations(filtered)
@@ -52,8 +53,35 @@ export default function ShowConsultation() {
     }
     fetchData();
    },[])
-   const time = new Date()
-   console.log(time)
+
+   const getQr = async (id)=>
+   {
+    try{
+        const response2 = await fetch(
+          `${process.env.REACT_APP_BASE_URL}/api/consultations/${id}/qrcode`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          }
+        );
+
+        const data = btoa(response2);
+        console.log(data);
+        const newBlob =await response2.blob()
+        setBlob(new Blob([newBlob], { type: 'image/png' }))
+        setQr(data)
+        setShowQr(true)
+
+    }
+        catch(err){
+            console.log(err)
+        }
+
+   }
+   console.log(blob)
   return (
     
     <div>
@@ -78,10 +106,12 @@ export default function ShowConsultation() {
                          new Date(e.dateOfAppointment)>new Date () &&
                          <ul className='mx-2 my-5 flex  flex-col border rounded-[10px] shadow-xl p-5'>
                          <li>Consultation for SELF </li>
-                         <li>Consultation on {Date(e.dateOfAppointment)}</li>
+                         <li>Consultation on {e.dateOfAppointment}</li>
                          <li>Consultation code {e.code}</li>
                          <li>Status is {e.status}</li>
                          <li>QR code {e.qrCodeImageLocation}</li>
+                         {showQr &&   <img src={`data:image/png;base64,${qr}`} alt="Qr"/>}
+                         <Button onClick={()=>getQr(e.id)}>Show QR</Button>
                          </ul>
                         }</>
                     ))
