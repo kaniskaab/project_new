@@ -55,15 +55,15 @@ const BookCSelf = () => {
     options: doctors.map((option) => option.user.name),
   };
   const [value, setValue] = React.useState(null);
-
+console.log(details)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
       doctorId: doctorId,
-      memberId: details.id,
+      memberId: details.user.id,
       dateOfAppointment: date,
       fees: 0,
-      force: "false",
+      force: true,
     };
     console.log(formData);
     if (
@@ -73,6 +73,7 @@ const BookCSelf = () => {
     ) {
       toast.warn("Fill all the details before proceeding");
     }
+    console.log(refreshToken)
     const response = await fetch(
       `${process.env.REACT_APP_BASE_URL}/api/consultations`,
       {

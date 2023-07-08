@@ -39,36 +39,29 @@ const Design1 = () => {
         console.log(id);
 
         const filteredData = userData.filter((data) => data.user.id === id);
-        console.log(filteredData[0]);
+        // console.log(filteredData[0]);
         setFamily(filteredData[0].familyMembers)
         setData(filteredData[0]);
+
+        //getting consultations 
+        const fetchConsultation=  await fetch(
+          `${process.env.REACT_APP_BASE_URL}/api/consultations/1`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          }
+        );
+        const consultation= await fetchConsultation.json();
+        console.log(consultation)
       } catch (error) {
         console.error("An error occurred while fetching user data:", error);
       }
     };
-    // const getMembers = async () => {
-    //   try {
-    //     const response1 = await fetch(
-    //       `${process.env.REACT_APP_BASE_URL}/api/members/${userId}/family-members`,
-    //       {
-    //         method: "GET",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Authorization: `Bearer ${refreshToken}`,
-    //         },
-    //       }
-    //     );
-    //     const data = await response1.json();
-    //     console.log(data);
-    //     setFamily(data);
-    //   } catch (error) {
-    //     console.log("error  is" + error);
-    //   }
-    // };
-
     fetchData();
-    // getMembers();
-  }, []);
+    }, []);
 
   const userName = localStorage.getItem("name");
 
@@ -82,7 +75,7 @@ const Design1 = () => {
 
   const getAllergy = (member) => {
     const id = member.id;
-    console.log(member)
+    // console.log(member)
     localStorage.setItem("familyMemberId", id);
     navigate("/memberAllergies");
   };
@@ -119,6 +112,13 @@ const Design1 = () => {
               </Typography>
               <Typography variant="body1" align="center">
                 Age: {data.age}
+              </Typography>
+              <Typography variant="body1" align="center">
+                Allergies:
+               {data.allergies && data.allergies.map((allergy)=>
+                
+                  <div>{allergy.allery} reported by {allergy.reportedBy}</div>
+                )}
               </Typography>
 
               <div
@@ -172,7 +172,7 @@ const Design1 = () => {
                 Dependents
               </Button>
               <ul>
-                {console.log(family)}
+                {/* {console.log(family)} */}
                 { family && family.map((member) => (
                   <li key={member.id} style={{ marginBottom: "16px" }}>
                     <Paper
@@ -197,7 +197,7 @@ const Design1 = () => {
                           {member.govtId}
                         </Typography>
                         <Typography variant="body1" className=" m-2 rounded-[5px] shadow-md">
-                          {console.log(member.allergies)}
+                          {/* {console.log(member.allergies)} */}
                           {member.allergies && member.allergies.map(allergy=>
                             (
                               <ul>

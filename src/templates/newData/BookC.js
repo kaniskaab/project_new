@@ -14,7 +14,7 @@ const BookC = () => {
   const refreshToken = localStorage.getItem('token');
   const details = location.state.details;
   console.log(location.state.details);
-  const userId = localStorage.getItem("userId")
+  const userId = Number(localStorage.getItem("id"))
 
   const [doctors, setDoctors]=useState([]);
   useEffect( ()=>{
@@ -47,25 +47,9 @@ const BookC = () => {
   const userName = localStorage.getItem('name');
   const [date, setDate] = useState('');
   const [doctorId, setDoctorId] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleInputChange = (event) => {
-    const { value } = event.target;
-    setSearchTerm(value);
-    const filteredItems = doctors.filter((item) =>
-      item.user.name.toLowerCase().includes(value.toLowerCase())
-    );
-    console.log(filteredItems);
-    setSuggestions(filteredItems);
-  };
+  console.log(details)
 
-  const handleSuggestionClick = (selectedResult) => {
-    console.log(selectedResult.user.name);
-    setSearchTerm(selectedResult.user.name);
-    setDoctorId(selectedResult.id);
-    setSuggestions([]);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,8 +58,8 @@ const BookC = () => {
       memberId: userId,
       familyMemberId: details.id,
       dateOfAppointment: date,
-      fees: 0,
-      force: 'false',
+      fees: 130,
+      force: 'true',
     };
     console.log(formData);
     if (

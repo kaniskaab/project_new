@@ -22,6 +22,18 @@ export const UserProvider = ({ children }) => {
             'Authorization': `Bearer ${refreshToken}`,
           },
         });
+        const new_response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/consultations`, {
+          method:'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${refreshToken}`,
+          },
+        });
+
+        const data1= await new_response.json()
+        console.log(data1)
+
+
 
         if (!response.ok) {
           throw new Error('Failed to fetch user data.');

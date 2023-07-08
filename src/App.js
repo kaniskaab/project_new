@@ -18,6 +18,8 @@ import Design from "./templates/newData/Design";
 import BookC from "./templates/newData/BookC";
 import BookCSelf from "./templates/newData/BookCSelf";
 import Design1 from "./templates/newData/Design1";
+import DoctorRegister from "./templates/newData/DoctorRegister";
+import ShowConsultation from "./templates/newData/ShowConsultation";
 function App() {
   return (
     <>
@@ -40,6 +42,9 @@ function App() {
           <Route path ='/getConsultation' Component={BookC}/>
           <Route path ='/getConsultationSelf' Component={BookCSelf}/>
           <Route path ='/design1' Component={Design1}/>
+          <Route path='/registerDoctor' Component={DoctorRegister}/>
+          <Route path='/showConsultation' Component={ShowConsultation}/>
+
         </Routes>
       </BrowserRouter>
     </>
