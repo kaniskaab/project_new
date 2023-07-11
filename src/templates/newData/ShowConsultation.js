@@ -9,7 +9,9 @@ export default function ShowConsultation() {
     const [user,setUser]=useState('')
     const [qr,setQr]=useState('')
     const [showQr, setShowQr]=useState(false)
-    const [blob, setBlob]=useState('')
+    const[viewId,setViewId]=useState('')
+    const[link,setLink]=useState('')
+
     
     const [consultations, setConsultations]=useState([])
   
@@ -57,23 +59,43 @@ export default function ShowConsultation() {
    const getQr = async (id)=>
    {
     try{
+      setViewId(id)
+
         const response2 = await fetch(
           `${process.env.REACT_APP_BASE_URL}/api/consultations/${id}/qrcode`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              'Accept': 'application/json',
               Authorization: `Bearer ${refreshToken}`,
             },
           }
         );
 
-        const data = btoa(response2);
+        console.log(response2)
+
+        const data =await response2.blob();
         console.log(data);
-        const newBlob =await response2.blob()
-        setBlob(new Blob([newBlob], { type: 'image/png' }))
         setQr(data)
-        setShowQr(true)
+        setShowQr(!showQr)
+
+
+
+        const response1 = await fetch(
+          `${process.env.REACT_APP_BASE_URL}/api/consultations/${id}/link`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              'Accept': 'application/json',
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          }
+        );
+        const url =await response1.json();
+        setLink(url.url)
+        
 
     }
         catch(err){
@@ -81,7 +103,6 @@ export default function ShowConsultation() {
         }
 
    }
-   console.log(blob)
   return (
     
     <div>
@@ -110,8 +131,8 @@ export default function ShowConsultation() {
                          <li>Consultation code {e.code}</li>
                          <li>Status is {e.status}</li>
                          <li>QR code {e.qrCodeImageLocation}</li>
-                         {showQr &&   <img src={`data:image/png;base64,${qr}`} alt="Qr"/>}
-                         <Button onClick={()=>getQr(e.id)}>Show QR</Button>
+                         {showQr && e.id===viewId &&<> <img src={`${URL.createObjectURL(qr)}`} alt="Qr" className='h-[200px] w-[200px]'/> <h1 className='text-[15px] text-blue-500'>Link: {link}</h1></>}
+                         <Button onClick={()=>getQr(e.id)}>Show QR and Link</Button>
                          </ul>
                         }</>
                     ))

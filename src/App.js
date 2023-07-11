@@ -20,6 +20,8 @@ import BookCSelf from "./templates/newData/BookCSelf";
 import Design1 from "./templates/newData/Design1";
 import DoctorRegister from "./templates/newData/DoctorRegister";
 import ShowConsultation from "./templates/newData/ShowConsultation";
+import Doctor from "./templates/doctor/Doctor";
+import EditDetails from "./templates/doctor/EditDetails";
 function App() {
   return (
     <>
@@ -44,6 +46,8 @@ function App() {
           <Route path ='/design1' Component={Design1}/>
           <Route path='/registerDoctor' Component={DoctorRegister}/>
           <Route path='/showConsultation' Component={ShowConsultation}/>
+          <Route path='/doctor' Component={Doctor}/>
+          <Route path="/editDoctorDetails" Component={EditDetails}/>
 
         </Routes>
       </BrowserRouter>

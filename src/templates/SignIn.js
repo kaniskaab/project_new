@@ -48,6 +48,7 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [type, setType] = useState("");  
   const [alert, setAlert] = useState(false);
+  const[doctors, setDoctors]=useState([]);
 
   const handleAlert=()=>{
     setAlert(false)
@@ -68,7 +69,33 @@ export default function SignIn() {
     console.log('response: ', response)
     const data = await response.json();
     console.log(data);
-    if (data.accessToken && data.user.role==='user') {
+
+    const newResponse= await fetch(
+      `${process.env.REACT_APP_BASE_URL}/api/doctors`,
+      {
+        method:"GET",
+        headers:{
+          "Content-Type": "application/json",
+          "Authorization":`Bearer ${data.accessToken}`
+
+        }
+      }
+    )
+    const newData=await newResponse.json();
+    console.log(newData);
+if(data.accessToken)
+{
+  console.log(data)
+  localStorage.setItem('token', data.accessToken)
+  localStorage.setItem('refreshToken', data.refreshToken)
+  localStorage.setItem('role', "doctor")
+  localStorage.setItem('id',data.user.id)
+  localStorage.setItem('name',data.user.name)
+  newData.map((doctor)=>doctor.user.name==data.user.name? window.location.href="/doctor" :console.log("no "))
+}
+
+
+if (data.accessToken && data.user.role==='user') {
       console.log(members)
       navigate('/design1',{state:{members,data}});
       // window.location.href = "/dashboard";
@@ -81,6 +108,10 @@ export default function SignIn() {
       localStorage.setItem('token', data.accessToken)
       localStorage.setItem('refreshToken', data.refreshToken)
       localStorage.setItem('role', data.user.role)
+      localStorage.setItem('id',data.user.id)
+      navigate('/doctor');
+
+
       // navigate('/dashboard2'); //TODO use routing
     } else {
 //      alert("Please check your username and password");

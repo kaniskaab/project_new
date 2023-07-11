@@ -22,12 +22,12 @@ export default function DoctorRegister() {
        
 
         const responseNew = await fetch(
-          `${process.env.REACT_APP_DOCTOR_REGISTRATION_URL}`,
+          `http://localhost:3000/api/qrcode/doctor-registration-qrcode`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${refreshToken}`,
+              // Authorization: `Bearer ${refreshToken}`,
 
             }
           }
@@ -38,8 +38,8 @@ export default function DoctorRegister() {
         if(responseNew.ok)
         {
              console.log(responseNew)
-             const data =btoa((responseNew))
-             setQr(data);
+             const data = await responseNew.text()
+            //  setQr(data);
              console.log(data)
         toast.success("Qr code fetched")
         }
@@ -62,11 +62,8 @@ export default function DoctorRegister() {
           <Paper elevation={2} className="w-full h-auto">
             <div className="flex flex-col m-10">
               <h1>
-                {qr && <span>Registration Link : {qr}</span>}{" "}
+                {/* {qr && <span>Registration Link : {qr}</span>}{" "} */}
               </h1>
-              <img src={`data:image/png;base64,${qr}`} alt ="qr" className="h-auto w-auto"/>
-
-              {/* <h1>{qrView && <span>Qr : {qrView.slice(5)}</span>}</h1> */}
             </div>
           </Paper>
         </div>

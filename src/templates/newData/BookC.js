@@ -15,6 +15,7 @@ const BookC = () => {
   const details = location.state.details;
   console.log(location.state.details);
   const userId = Number(localStorage.getItem("id"))
+  console.log(refreshToken)
 
   const [doctors, setDoctors]=useState([]);
   useEffect( ()=>{
@@ -48,9 +49,6 @@ const BookC = () => {
   const [date, setDate] = useState('');
   const [doctorId, setDoctorId] = useState([]);
 
-  console.log(details)
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
@@ -74,7 +72,6 @@ const BookC = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
         Authorization: `Bearer ${refreshToken}`,
       },
       body: JSON.stringify(formData),

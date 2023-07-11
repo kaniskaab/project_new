@@ -6,6 +6,8 @@ export const UserProvider = ({ children }) => {
   const [members, setMembers] = useState([]);
   const[id,setId]=useState(0);
   const[doctors, setDoctors] = useState([])
+  const ID = Number(localStorage.getItem("id"));
+
 
   //CHANGE TOKEN
   const refreshToken = localStorage.getItem('token')
@@ -15,14 +17,14 @@ export const UserProvider = ({ children }) => {
       try {
         //CHANGE FETCH LINK ACCORDINGLY
         console.log(process.env.REACT_APP_BASE_URL)
-        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members`, {
+        const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/users`, {
           method:'GET',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${refreshToken}`,
           },
         });
-        const new_response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/consultations`, {
+        const new_response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/members/${ID}`, {
           method:'GET',
           headers: {
             'Content-Type': 'application/json',

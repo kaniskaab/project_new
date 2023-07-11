@@ -38,8 +38,10 @@ const Design1 = () => {
         console.log(userData);
         console.log(id);
 
+        
+
         const filteredData = userData.filter((data) => data.user.id === id);
-        // console.log(filteredData[0]);
+        console.log(filteredData[0]);
         setFamily(filteredData[0].familyMembers)
         setData(filteredData[0]);
 
@@ -60,6 +62,7 @@ const Design1 = () => {
         console.error("An error occurred while fetching user data:", error);
       }
     };
+    
     fetchData();
     }, []);
 
