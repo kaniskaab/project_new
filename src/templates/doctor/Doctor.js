@@ -75,6 +75,9 @@ export default function Doctor() {
     };
     fetchData();
   }, []);
+  
+
+  //viewConsultation to find a consultation
 
   const viewConsultation =async (newId)=>
   {

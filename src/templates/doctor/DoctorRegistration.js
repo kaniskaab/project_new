@@ -42,7 +42,7 @@ const DoctorRegistrationForm = () => {
       toast.success("Doctor Added Successfully!")
       const nextPage= ()=>
       {
-        navigate("/directConsultation");
+        navigate("/design1");
       }
       setTimeout(nextPage,3000)
     }
