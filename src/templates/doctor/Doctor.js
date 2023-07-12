@@ -6,12 +6,15 @@ import Header from "./Header";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 export default function Doctor() {
   const navigate = useNavigate();
+  const[details, setDetails]=useState([])
   const refreshToken = localStorage.getItem("token");
   const id = Number(localStorage.getItem("id"));
   const [consultation, setConsultation] = useState([]);
   console.log(id);
   const [doctor, setDoctor] = useState([]);
   const [data, setData] = useState("");
+  const[view,setView]=useState(false)
+  const[viewId,setViewId]=useState()
   console.log(refreshToken)
   useEffect(() => {
     const fetchData = async () => {
@@ -107,6 +110,47 @@ try{
 }catch(err){console.log(err)}
   }
 
+  const showDetails=async (id, fmId,e)=>{
+    try{
+    setViewId(e.id)
+    setDetails([]);
+      if(fmId){
+        const response = await fetch(
+          `${process.env.REACT_APP_BASE_URL}/api/members/${id}/family-members`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          }
+        );
+        const data= await response.json();
+        setDetails((data.filter((e)=>e.id==fmId.id))[0])
+        // console.log(data[0])
+
+      }
+      else{
+        const response1 = await fetch(
+          `${process.env.REACT_APP_BASE_URL}/api/members/${id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          }
+        );
+        const data= await response1.json();
+        setDetails(data)
+        console.log(data)
+      }
+      setView(true)
+
+
+    }catch(err){console.log(err)}
+  }
+console.log(details)
   return (
     <>
       <Header />
@@ -238,13 +282,25 @@ try{
                                     IST
                                   </h1>
                                 </h1>
+
                               </Typography>
+                              {details && console.log(details[0])}                            
+                                {view  && details &&  viewId==e.id &&
+                              <Typography variant="body1">
+                                <div>Name:{e.familyMember && details?details.name:(details.user)?details.user.name:""}</div>
+                                {console.log(details)}
+                               <div>Age: {details.age}</div>
+                               <div>Allergies: <ul>{ details.allergies &&  details.allergies.map((allergy)=><li>{allergy.allergy} reported by {allergy.reportedBy}</li>)}</ul></div>
+
+                              </Typography>
+                              }
+
                             </div>
                             <div>
                               <Button
                                 variant="outlined"
                                 color="primary"
-                                 onClick={() => viewConsultation(e.id)}
+                                 onClick={() => showDetails(e.createdBy,e.familyMember,e)}
                                 style={{ marginRight: "8px" }}
                               >
                                 View More
@@ -252,7 +308,7 @@ try{
                               <Button
                                 variant="outlined"
                                 color="primary"
-                                //  onClick={() => getAllergy(member)}
+                                 onClick={() => viewConsultation(e.id)}
                               >
                                 Show QR
                               </Button>

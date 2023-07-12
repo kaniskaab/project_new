@@ -27,7 +27,7 @@ export default function DoctorRegister() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              // Authorization: `Bearer ${refreshToken}`,
+              Authorization: `Bearer ${refreshToken}`,
 
             }
           }

@@ -47,7 +47,7 @@ const Design1 = () => {
 
         //getting consultations 
         const fetchConsultation=  await fetch(
-          `${process.env.REACT_APP_BASE_URL}/api/consultations/1`,
+          `${process.env.REACT_APP_BASE_URL}/api/consultations/find/1`,
           {
             method: "GET",
             headers: {
