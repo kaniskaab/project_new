@@ -22,7 +22,7 @@ export default function DoctorRegister() {
        
 
         const responseNew = await fetch(
-          `http://localhost:3000/api/qrcode/doctor-registration-qrcode`,
+          `http://localhost:3000/registerDoctor/api/qrcode/doctor-registration-qrcode`,
           {
             method: "GET",
             headers: {

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Logout from "../Logout";
 
 const Header = () => {
   return (
@@ -18,6 +19,9 @@ const Header = () => {
             <Link link to="/doctor" className="m-2  hover:text-blue-100 text-white">
               Home
             </Link>
+            <div>
+              <Logout/>
+            </div>
           </div>
         </div>
       </nav>

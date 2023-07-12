@@ -9,7 +9,7 @@ const Sidebar = () => {
     <div>
 <div>
   <Paper >
-      <nav className="flex flex-col bg-transparent w-full h-screen px-4 font-ubu">
+      <nav className="flex flex-col w-full h-screen px-4 font-ubu">
         <div className="mt-10 mb-4">
           <ul className="ml-4">
             {/* <li className="mb-2 px-4 py-4 text-[#132540] flex flex-row hover:text-black   hover:bg-gray-300  hover:font-bold rounded-lg">

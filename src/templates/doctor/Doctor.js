@@ -15,6 +15,10 @@ export default function Doctor() {
   const [data, setData] = useState("");
   const[view,setView]=useState(false)
   const[viewId,setViewId]=useState()
+  const[link,setLink]=useState('');
+  const[qr,setQr]=useState('');
+  const[showQr, setShowQr]=useState(false);
+  const [qrViewId, setQrViewId]=useState(false);
   console.log(refreshToken)
   useEffect(() => {
     const fetchData = async () => {
@@ -149,6 +153,54 @@ try{
 
 
     }catch(err){console.log(err)}
+  }
+
+
+  const getQr = async (id, docId)=>
+  {
+   try{
+     setQrViewId(id)
+            const response2 = await fetch(
+         `${process.env.REACT_APP_BASE_URL}/api/consultations/${id}/qrcode`,
+         {
+           method: "GET",
+           headers: {
+             "Content-Type": "application/json",
+             'Accept': 'application/json',
+             Authorization: `Bearer ${refreshToken}`,
+           },
+         }
+       );
+
+       console.log(response2)
+
+       const data =await response2.blob();
+       console.log(data);
+       setQr(data)
+       setShowQr(true)
+
+
+
+       const response1 = await fetch(
+         `${process.env.REACT_APP_BASE_URL}/api/consultations/${id}/link`,
+         {
+           method: "GET",
+           headers: {
+             "Content-Type": "application/json",
+             'Accept': 'application/json',
+             Authorization: `Bearer ${refreshToken}`,
+           },
+         }
+       );
+       const url =await response1.json();
+       setLink(url.url)
+       
+
+   }
+       catch(err){
+           console.log(err)
+       }
+
   }
 console.log(details)
   return (
@@ -293,7 +345,9 @@ console.log(details)
                                <div>Allergies: <ul>{ details.allergies &&  details.allergies.map((allergy)=><li>{allergy.allergy} reported by {allergy.reportedBy}</li>)}</ul></div>
 
                               </Typography>
+                              
                               }
+                                  {showQr && e.id===qrViewId &&<><img src={`${URL.createObjectURL(qr)}`} alt="Qr" className='h-[200px] w-[200px]'/> <h1 className='text-[15px] text-blue-500'>Link: {link}</h1></>}
 
                             </div>
                             <div>
@@ -305,13 +359,8 @@ console.log(details)
                               >
                                 View More
                               </Button>
-                              <Button
-                                variant="outlined"
-                                color="primary"
-                                 onClick={() => viewConsultation(e.id)}
-                              >
-                                Show QR
-                              </Button>
+                              <Button onClick={()=>getQr(e.id, e.doctor.id)}>Show QR and Link</Button>
+
                             </div>
                           </Paper>
                         </li>
