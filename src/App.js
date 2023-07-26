@@ -22,6 +22,9 @@ import DoctorRegister from "./templates/newData/DoctorRegister";
 import ShowConsultation from "./templates/newData/ShowConsultation";
 import Doctor from "./templates/doctor/Doctor";
 import EditDetails from "./templates/doctor/EditDetails";
+import SidebarF from "./templates/newData/SidebarF";
+import MemberDashboard from './templates/newData/MemberDashboard'
+import PrescriptionForm from "./templates/doctor/PresciptionForm";
 function App() {
   return (
     <>
@@ -43,11 +46,12 @@ function App() {
           <Route path='/design' Component={Design}/>
           <Route path ='/getConsultation' Component={BookC}/>
           <Route path ='/getConsultationSelf' Component={BookCSelf}/>
-          <Route path ='/design1' Component={Design1}/>
+          <Route path ='/design1' Component={MemberDashboard}/>
           <Route path='/registerDoctor' Component={DoctorRegister}/>
           <Route path='/showConsultation' Component={ShowConsultation}/>
           <Route path='/doctor' Component={Doctor}/>
           <Route path="/editDoctorDetails" Component={EditDetails}/>
+          <Route path='/prescriptionForm' Component={PrescriptionForm}/>
 
         </Routes>
       </BrowserRouter>

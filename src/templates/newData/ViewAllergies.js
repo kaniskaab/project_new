@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Paper, Typography, Button, TextField } from '@mui/material';
-import Header from './Header';
-import Sidebar from './Sidebar';
+import Header from './HeaderF';
+import Sidebar from './SidebarF';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import MasksIcon from '@mui/icons-material/Masks';
+import Alarm from '../../svg/Alarm';
+import Add from '../../svg/Add';
+import Bag from '../../svg/Bag';
 
 
 const ViewAllergies = () => {
@@ -90,85 +92,58 @@ const ViewAllergies = () => {
 
   return (
     <div>
-      <Header />
-      <Grid container spacing={1}>
-        <Grid item xs={3}>
-          <Sidebar />
-        </Grid>
-        <Grid item xs={9}>
-          <Paper elevation={3} style={{ padding: "20px" }}>
-            <Typography variant="h4" align="center" underline="true">
-              <h1 className="font-ubu text-bold">All Allergies</h1>
-            </Typography>
-            <ul>
-              {allergies !== null ? (
-                allergies.map((allergy) => (
-                  <li key={allergy.id}>
-                    <Paper style={{padding:"10px", marginBottom:"20px"}} >
-                         <Typography variant="h6">
-                          <MasksIcon style={{margin:"2px"}}/>
-                        {allergy.allergy} reported by {allergy.reportedBy}
-                    </Typography>
-                  
-                    </Paper>
-                 
-                  </li>
-                ))
-              ) : (
-                <Typography variant="h6">No allergies</Typography>
-              )}
-            </ul>
-            <Paper elevation={3}>
-            <Grid container spacing={2} alignItems="center" style={{padding:"10px"}}>
-              <Grid item xs={6}>
-               
-                <input
-                  type="text"
-                  placeholder="Allergy"
-                  value={allergy}
-                  onChange={(e) => setAllergy(e.target.value)}
-                  className="border border-blue-500 p-3 rounded-xl w-full"
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <input
-                  type="text"
-                  placeholder="Reported By"
-                  value={reportedBy}
-                  onChange={(e) => setReportedBy(e.target.value)}
-                  className="border border-blue-500 p-3 rounded-xl w-full"
-                />
-              </Grid>
-            </Grid>
+      <div>
+      <Header/>
+      <div className='flex'>
+        <Sidebar/>
+      </div>
+      <div className="ml-[400px] mt-[75px] flex flex-col">
+      <div className="h-[153px] w-[626px] mx-auto rounded-[77px] z-10 bg-white flex items-center justify-center"><text className="text-[36px] font-bold font-ubu flex">All allergies</text></div>
 
-            </Paper>
-          
-            <Grid container spacing={2} justifyContent="center" style={{margin:"2px"}}>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleAdd}
-                >
-                  Add
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={handleDelete}
-                >
-                  Delete
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
-      </Grid>
+<div className="h-[554px] w-[90%] mx-auto bg-[#c5d5e8] -mt-10 rounded-[91px] flex flex-col items-center overflow-y-scroll mb-10">
+  <ul className='w-[90%]'>
+    {allergies && allergies.map((allergy)=>
+    (
+      <li className='bg-white rounded-xl flex w-full items-center justify-between mt-[70px] p-3'>
+        <span className='text-[20px] font-ubu font-bold '><Alarm/></span>
+        <text className='text-[20px] font-ubu font-bold '>{allergy.allergy}</text>
+        <span className='text-[20px] font-ubu'>reported by</span>
+        <text className='text-[20px] font-ubu font-bold '>{allergy.reportedBy}</text>
+      </li>
+    ))}
+  </ul>
+  <div className='flex w-[90%] justify-between mt-[50px]'>
+      <input
+type="text"
+placeholder="Allergy"
+value={allergy}
+onChange={(e) => setAllergy(e.target.value)}
+className="border border-black p-3 rounded-xl w-full"
+/>
+<input
+type="text"
+placeholder="Reported By"
+value={reportedBy}
+onChange={(e) => setReportedBy(e.target.value)}
+className="border border-black p-3 rounded-xl w-full"
+/>
+  </div>
+  <div className='w-1/4 flex justify-between items-center mt-10 mb-2'>
+    <button className='bg-white rounded-full' onClick={handleAdd}><Add/></button>
+    <button className='bg-gray-200 p-3 rounded-full' onClick={handleDelete}><Bag/></button>
+  </div>
+</div>
+
+      </div>
+      </div>
       <ToastContainer />
     </div>
   );
 };
 
 export default ViewAllergies;
+
+
+
+
+

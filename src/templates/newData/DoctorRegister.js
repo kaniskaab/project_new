@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import SidebarN from "./Sidebar";
+import Sidebar from "./SidebarF";
 import { ToastContainer, toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "../../context.js/UserContext";
@@ -8,7 +8,7 @@ import {
   Paper,
 
 } from "@mui/material";
-import Header from "./Header";
+import Header from "./HeaderF";
 
 export default function DoctorRegister() {
   const refreshToken = localStorage.getItem("token");
@@ -52,21 +52,14 @@ export default function DoctorRegister() {
   }, []);
   return (
     <div>
-      <Header />
-      <div style={{ display: "flex", height: "100vh" }}>
-        <div style={{ width: "25%", backgroundColor: "#f5f5f5" }}>
-          <SidebarN />
-        </div>
-        <div style={{ flex: 1, padding: "2rem", overflow: "auto" }}>
-          {/* {console.log(qr)} */}
-          <Paper elevation={2} className="w-full h-auto">
-            <div className="flex flex-col m-10">
-              <h1>
-                {/* {qr && <span>Registration Link : {qr}</span>}{" "} */}
-              </h1>
-            </div>
-          </Paper>
-        </div>
+       <div>
+      <div>
+      <Header/>
+      <div className='flex'>
+        <Sidebar/>
+      </div>
+      <div className="ml-[400px] mt-[75px] flex flex-col"></div>
+      </div>
       </div>
       <ToastContainer/>
     </div>

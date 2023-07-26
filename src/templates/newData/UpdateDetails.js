@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Grid, Button, Typography, Box, Container, Paper } from "@mui/material";
-import Sidebar from './Sidebar'
 import DataDrivenForm from './DataDrivenForm';
-import Header from "./Header";
-
+import HeaderF from "./HeaderF";
+import SidebarF from "./SidebarF";
 const UpdateDetails = () => {
   const id = localStorage.getItem('id');
   useState(() => {
@@ -12,23 +10,13 @@ const UpdateDetails = () => {
 
   return (
     <div>
-      <Header />
-      <Container maxWidth="lg">
-        <Grid container spacing={2}>
-          <Grid item xs={3} style={{height:"100vh"}}>
-
-                <Sidebar/>
-     
-          </Grid>
-          <Grid item xs={9}>
-            <Paper elevation={3}>
-              <Box p={4}>
-                <DataDrivenForm />
-              </Box>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Container>
+      <HeaderF/>
+      <div className='flex'>
+        <SidebarF/>
+      </div>
+      <div className="ml-[400px] mt-[75px] flex flex-col p-10">
+        <DataDrivenForm/>
+      </div>
     </div>
   );
 };

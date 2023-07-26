@@ -12,7 +12,7 @@ export default function HeaderF() {
             <text>Doctor App</text>
         </div>
         <div className='left-element flex items-center justify-around w-1/6'>
-            <a href='doctor'>
+            <a href='design1'>
                 <Home/>
             </a>
             <Logout/>
@@ -22,4 +22,3 @@ export default function HeaderF() {
     </div>
   )
 }
-

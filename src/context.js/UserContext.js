@@ -46,7 +46,7 @@ export const UserProvider = ({ children }) => {
         console.log(userData);
 
         const response2 = await fetch(
-          `${process.env.REACT_APP_BASE_URL}/api/doctors`,
+          `${process.env.REACT_APP_BASE_URL}/api/doctor-consultation`,
           {
             method: "GET",
             headers: {
@@ -56,7 +56,8 @@ export const UserProvider = ({ children }) => {
           }
         );
         const data = await response2.json();
-        console.log(data);
+        console.log(response2)
+        console.log( 'data for doctor consultation', data);
         setDoctors(data);
       } catch (error) {
         console.error('An error occurred while fetching user data:', error);
