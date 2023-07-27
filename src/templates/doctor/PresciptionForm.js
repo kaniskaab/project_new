@@ -7,6 +7,7 @@ const PrescriptionForm = () => {
     const location=useLocation();
     const [details,setDetails]=useState({});
     const [id,setId]=useState(0);
+    const refreshToken = localStorage.getItem("token");
 
   const [prescription, setPrescription] = useState({
     notes: '',
@@ -18,7 +19,7 @@ const PrescriptionForm = () => {
         dosageInMg: 0,
         frequency: 0,
         duration: 0,
-        firstTimeOrRefill: '',
+        firstTimeOrRefill: 'first time',
         substitutionAllowed: true,
       },
     ],
@@ -52,7 +53,8 @@ const PrescriptionForm = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}/api/consultations/${id}/prescription`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${refreshToken}`,
       },
       body: JSON.stringify(prescription),
     })
