@@ -282,7 +282,17 @@ export default function Doctor() {
                               <h1 className="flex flex-row-reverse">
                                 {" "}
                                 {e.dateOfAppointment.split("T")[1].slice(0, 5)}
-                                IST
+                                {" "}IST
+                              </h1>
+                            </h1>
+                          </li>
+                          <li>
+                            <h1 className="flex">
+                              {" "}
+                              Status:
+                              <h1 className="flex flex-row-reverse">
+                                {" "}
+                                {e.status}
                               </h1>
                             </h1>
                           </li>
@@ -304,7 +314,7 @@ export default function Doctor() {
                             <span>View Prescription</span>
                           </button>
                           {view && details && viewId == e.id && showQr && (
-                            <div className="h-[400px] bg-[#C5D5E8] w-[400px] fixed top-[100px] z-10 rounded-lg items-center justify-center shadow-lg">
+                            <div className="h-[400px] bg-[#C5D5E8] w-[400px] fixed top-[100px] z-20 rounded-lg items-center justify-center shadow-lg">
                               <div className="h-[90%] w-[90%] bg-white/70 rounded-lg overflow-y-scroll justify-center px-2 m-auto mt-5 overflow-x-clip ">
                                 <ul className="flex flex-col items-center justify-center text-[15px]">
                                   <li>
@@ -330,15 +340,22 @@ export default function Doctor() {
                                       </div>
                                       Age: {details.age}
                                     </li>
-                                    <li className="flex items-end text-[16px] font-semibold">
+                                    <li className="flex text-[16px] font-semibold items-baseline mt-2">
                                       <div className="px-2">
                                         {" "}
                                         <Age />
                                       </div>
                                       Allergies:{" "}
-                                      <ul>
-                                        {details.allergies &&
+                                      <ul className="flex flex-col items-baseline">
+                                        {details.allergies && details.name &&
                                           details.allergies.map((allergy) => (
+                                            <li>
+                                              {allergy.allergy} reported by{" "}
+                                              {allergy.reportedBy}
+                                            </li>
+                                          ))}
+                                            {details.allergies && details.user && details.user.name &&
+                                          details.allergies[0].map((allergy) => (
                                             <li>
                                               {allergy.allergy} reported by{" "}
                                               {allergy.reportedBy}
@@ -518,15 +535,22 @@ export default function Doctor() {
                                       </div>
                                       Age: {details.age}
                                     </li>
-                                    <li className="flex items-end text-[16px] font-semibold">
+                                    <li className="flex text-[16px] font-semibold items-baseline mt-2">
                                       <div className="px-2">
                                         {" "}
                                         <Age />
                                       </div>
                                       Allergies:{" "}
                                       <ul>
-                                        {details.allergies &&
+                                      {details.allergies && details.name &&
                                           details.allergies.map((allergy) => (
+                                            <li>
+                                              {allergy.allergy} reported by{" "}
+                                              {allergy.reportedBy}
+                                            </li>
+                                          ))}
+                                            {details.allergies && details.user && details.user.name &&
+                                          details.allergies[0].map((allergy) => (
                                             <li>
                                               {allergy.allergy} reported by{" "}
                                               {allergy.reportedBy}

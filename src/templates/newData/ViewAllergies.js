@@ -102,7 +102,7 @@ const ViewAllergies = () => {
 
 <div className="h-[554px] w-[90%] mx-auto bg-[#c5d5e8] -mt-10 rounded-[91px] flex flex-col items-center overflow-y-scroll mb-10">
   <ul className='w-[90%]'>
-    {allergies && allergies.map((allergy)=>
+    {allergies && allergies[0] && allergies[0].map((allergy)=>
     (
       <li className='bg-white rounded-xl flex w-full items-center justify-between mt-[70px] p-3'>
         <span className='text-[20px] font-ubu font-bold '><Alarm/></span>

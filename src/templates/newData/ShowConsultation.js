@@ -149,7 +149,7 @@ export default function ShowConsultation() {
                           <text className='font-bold text-[20px]'>                            {e.familyMember? <>CONSULTATION FOR {e.familyMember.name}</>:<>CONSULTATION FOR SELF</>}
 </text>
                          <li>Date <text>{(e.dateOfAppointment).slice(0,10)}</text> </li>
-                         <li>Time <text>{(e.dateOfAppointment).slice(11,19)}</text> </li>
+                         <li>Time <text>{(e.dateOfAppointment).slice(11,16)}</text> </li>
 
                          <li>Code {e.code}</li>
                          <li>Status {e.status}</li>
