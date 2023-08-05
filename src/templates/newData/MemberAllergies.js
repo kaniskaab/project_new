@@ -61,7 +61,7 @@ const ViewAllergies = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${refreshToken}`,
       },
-      body: JSON.stringify([allergies]),
+      body: JSON.stringify(allergies),
     });
     const data = await response.json();
     console.log(data);

@@ -45,17 +45,18 @@ const MemberAllergies = () => {
     allergies === null
       ? setAllergies(arrayAllergy)
       : allergies.push(allergyDetail);
-
+    console.log(allergies)
     const response = await fetch(lnk, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${refreshToken}`,
       },
-      body: JSON.stringify([allergyDetail]),
+      body: JSON.stringify(allergies),
     });
     const data = await response.json();
     if (response.ok) {
+      console.log(data);
       toast.success("Allergy Added");
       setAllergy("");
       setReportedBy("");
