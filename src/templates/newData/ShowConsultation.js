@@ -15,9 +15,16 @@ export default function ShowConsultation() {
     const[link,setLink]=useState('')
     const [doctor, setDoctor]=useState([]);
     const[doctorView, setDoctorView]=useState('');
+    const[viewpres,setViewPres]=useState(false);
+    const[viewpresId,setViewPresId]=useState('');
+
     
     const [consultations, setConsultations]=useState([])
-  
+  const viewPres= (id)=>
+  {
+    setViewPresId(id);
+    setViewPres(true);
+  }
     useEffect( ()=>{
     const fetchData = async()=>
     {
@@ -157,8 +164,134 @@ export default function ShowConsultation() {
 </svg>
 
                         </button></div>
+                      
                          </div>}
+                         { viewpres && viewpresId==e.id && <div className='fixed bg-white h-1/2 w-1/2 top-[100px] border rounded-lg p-1 border-5 z-20 font-ubu text-[20px] font-bold overflow-y-scroll'>
+                          <div className='flex w-full items-center justify-between h-10'><text>Prescription</text> 
+                          <button onClick={()=>setViewPres(false)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+                          </button >
+                          
+
+                          </div>
+                          {e.prescriptions &&
+                            e.prescriptions.map((prescription)=>(
+                              <ul className='flex flex-col'>
+                                <li>
+                                  {prescription.notes}
+                                </li>
+                                <li>{prescription.diagnosis}</li>
+                                <li>{prescription.drugDetails.map((drug)=>
+                                <ul className='flex flex-col'>
+                                  <li>{drug.genericName}</li>
+                                  <li>{drug.brandName}</li>
+                                  <li>{drug.dosageInMg}</li>
+                                  <li>{drug.frequency}</li>
+                                  <li>{drug.duration}</li>
+                                  <li>{drug.firstTimeOrRefill}</li>
+                                  <li>{drug.substitutionAllowed}</li>
+
+
+
+                                </ul>
+
+                                )}</li>
+                                <li>{prescription.labTests && prescription.labTests.map((test)=>
+                                <ul className='flex flex-col'>
+                                  <li>{test.testType}</li>
+                                </ul>)}</li>
+                                
+                              </ul>
+                            ))
+                          }
+
+                        </div>
+                        }
                          <button onClick={()=>getQr(e.id, e.doctor.id)} className=' w-4/5 h-10 rounded-full flex bg-gray-200 items-center justify-center hover:bg-gray-300 hover:scale-105 transition-all delay-100 mx-auto'><Eye/><span className='ml-2'>Show QR and Link</span></button>
+                         <button onClick={()=>viewPres(e.id)} className=' w-4/5 h-10 rounded-full flex bg-gray-200 items-center justify-center hover:bg-gray-300 hover:scale-105 transition-all delay-100 mx-auto mt-2'><Eye/><span className='ml-2'>View Prescription</span></button>
+
+                         </ul>
+                        }</>
+                    ))
+                }
+        </div>
+        <div className="h-[153px] w-[626px] mx-auto rounded-[77px] z-10 bg-white flex items-center justify-center"><text className="text-[36px] font-bold font-ubu flex">Past Consultations</text></div>
+
+        <div className="h-[554px] w-[90%] mx-auto bg-[#c5d5e8] -mt-[100px] pt-[110px] rounded-[91px] flex flex-col items-center overflow-y-scroll mb-10">
+      {
+                    consultations.map((e)=>(
+                        <>
+                        {
+                         new Date(e.dateOfAppointment)<new Date () &&
+                         <ul className='flex flex-col border rounded-[10px] shadow-xl w-4/5 p-3 mb-3 text-[18px] font-ubu bg-white'>
+                          <text className='font-bold text-[20px]'>                            {e.familyMember? <>CONSULTATION FOR {e.familyMember.name}</>:<>CONSULTATION FOR SELF</>}
+</text>
+                         <li>Date <text>{(e.dateOfAppointment).slice(0,10)}</text> </li>
+                         <li>Time <text>{(e.dateOfAppointment).slice(11,19)}</text> </li>
+
+                         <li>Code {e.code}</li>
+                         <li>Status {e.status}</li>
+                         {/* <li>QR code {e.qrCodeImageLocation}</li> */}
+                         {console.log(doctorView)}
+                         {showQr && e.id===viewId &&<div className='w-[450px] fixed bg-[#C5D5E8] shadow-2xl  flex flex-col justify-center items-center rounded-lg p-5 top-[100px] border-5 z-20'>
+                          <div className='bg-white flex flex-col justify-center items-center rounded-lg p-1 border-5 z-20 font-ubu text-[20px] font-bold'>
+                          <text>Consultation with Dr. {doctorView.user.name}</text> <text>Specialization: {doctorView.specialization}</text> <img src={`${URL.createObjectURL(qr)}`} alt="Qr" className='h-[200px] w-[200px]'/> <h1 className='text-[15px] text-blue-500'>Link: {link}</h1>
+                        <button className='bg-gray-200 rounded-full rotate-90 p-2 font-bold mt-1 hover:bg-gray-300 hover:scale-105 transition-all delay-100' onClick={()=>setShowQr(false)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+</svg>
+
+                        </button></div>
+                       
+                         </div>}
+                         { viewpres && viewpresId==e.id && <div className='fixed bg-white h-1/2 w-1/2 top-[100px] border rounded-lg p-1 border-5 z-20 font-ubu text-[20px] font-bold overflow-y-scroll'>
+                          <div className='flex w-full items-center justify-between h-10'><text>Prescription</text> 
+                          <button onClick={()=>setViewPres(false)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+                          </button >
+                          
+
+                          </div>
+                          {e.prescriptions &&
+                            e.prescriptions.map((prescription)=>(
+                              <ul className='flex flex-col'>
+                                <li>
+                                  {prescription.notes}
+                                </li>
+                                <li>{prescription.diagnosis}</li>
+                                <li>{prescription.drugDetails.map((drug)=>
+                                <ul className='flex flex-col'>
+                                  <li>{drug.genericName}</li>
+                                  <li>{drug.brandName}</li>
+                                  <li>{drug.dosageInMg}</li>
+                                  <li>{drug.frequency}</li>
+                                  <li>{drug.duration}</li>
+                                  <li>{drug.firstTimeOrRefill}</li>
+                                  <li>{drug.substitutionAllowed}</li>
+
+
+
+                                </ul>
+
+                                )}</li>
+                                <li>{prescription.labTests && prescription.labTests.map((test)=>
+                                <ul className='flex flex-col'>
+                                  <li>{test.testType}</li>
+                                </ul>)}</li>
+                                
+                              </ul>
+                            ))
+                          }
+
+                        </div>
+                        }
+                         <button onClick={()=>getQr(e.id, e.doctor.id)} className=' w-4/5 h-10 rounded-full flex bg-gray-200 items-center justify-center hover:bg-gray-300 hover:scale-105 transition-all delay-100 mx-auto'><Eye/><span className='ml-2'>Show QR and Link</span></button>
+                         <button onClick={()=>viewPres(e.id)} className=' w-4/5 h-10 rounded-full flex bg-gray-200 items-center justify-center mt-2 hover:bg-gray-300 hover:scale-105 transition-all delay-100 mx-auto'><Eye/><span className='ml-2'>View Prescription</span></button>
+
                          </ul>
                         }</>
                     ))
