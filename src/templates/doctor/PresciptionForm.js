@@ -13,7 +13,7 @@ const PrescriptionForm = () => {
   const [details, setDetails] = useState({});
   const [id, setId] = useState(0);
   const refreshToken = localStorage.getItem("token");
-
+const[verify,setVerify]=useState();
   const [prescription, setPrescription] = useState({
     notes: "",
     diagnosis: "",
@@ -30,11 +30,41 @@ const PrescriptionForm = () => {
     ],
     labTests: [{ testType: "" }],
   });
+  const [otp, setOtp] = useState('');
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPopUp, setShowPopUp]=useState(false);
+
+  const handleOtpChange = (event) => {
+    setOtp(event.target.value);
+  };
   useEffect(() => {
     setDetails(location.state.details);
     setId(location.state.id);
     console.log(location.state.details);
   }, []);
+  const handleVerify = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/consultations/${id}/prescription/${verify.id}/verify`, {
+        method: 'POST',
+        body: JSON.stringify({ "otpCode": otp }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(otp)
+      if (response.ok) {
+        setMessage('Prescription verified');
+      } else {
+        setMessage('Verification failed');
+      }
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleInputChange = (e, index, section) => {
     const { name, value } = e.target;
@@ -54,6 +84,7 @@ const PrescriptionForm = () => {
   const handleSubmit = () => {
     // Replace this with the actual consultation ID
     console.log(prescription);
+    // setVerify(prescription)
     fetch(
       `${process.env.REACT_APP_BASE_URL}/api/consultations/${id}/prescription`,
       {
@@ -74,6 +105,7 @@ const PrescriptionForm = () => {
       .then((data) => {
         // Handle success response if needed
         console.log("Prescription submitted successfully:", data);
+        setVerify(data);
       })
       .catch((error) => {
         // Handle error if needed
@@ -106,6 +138,7 @@ const PrescriptionForm = () => {
     });
   };
 
+
   return (
     <div className="overflow-x-clip">
       <Header />
@@ -113,7 +146,7 @@ const PrescriptionForm = () => {
         <Sidebar />
       </div>
       <div className="ml-[350px] mt-[75px] flex">
-      <div className="h-[250px] w-2/5 bg-white mt-[75px] rounded-[22px] overflow-y-scroll">
+      <div className="w-2/5 bg-white mt-[75px] rounded-[22px] overflow-y-scroll">
         <div className="flex w-full items-center justify-center font-ubu text-[20px]">Details for: {details.user? <h1>{details.user.name}</h1>:<h1>{details.name}</h1>}</div>
         <ul className="flex flex-col p-5 justify-around text-[15px] leading-[40px]">
           <li className="flex items-center">
@@ -135,7 +168,69 @@ const PrescriptionForm = () => {
               </ul>
           </li>
         </ul>
+        <div className="flex items-center justify-center text-center font-mono text-[15px]">
+      {verify && <div className="">
+         <ul>
+          <li>Status: {verify.status}</li>
+          <li>Notes: {verify.notes}</li>
+          <li>Diagnosis: {verify.diagnosis}</li>
+          <li>Drug Details: {verify.drugDetails.map((drug)=>
+          <ul>
+            <li>Generic Name: {drug.genericName}</li>
+            <li>Brand Name: {drug.brandName}</li>
+            <li>Dosage in Mg: {drug.dosageInMg}</li>
+            <li>Frequency: {drug.frequency}</li>
+            <li>Duration: {drug.duration}</li>
+            <li>First Time Or Refill: {drug.firstTimeOrRefill}</li>
+            <li>Substitution Allowed: {drug.substitutionAllowed}</li>
+
+
+          </ul>)}</li>
+
+
+
+          <li>Lab Tests: {verify.labTests.map((test)=>
+          <ul>
+            <li>Test Type: {test.testType}</li>
+          </ul>)}</li>
+         </ul>
+         <button
+            onClick={()=>setShowPopUp(true)}
+            className="px-4 py-2 bg-gray-200 rounded-lg w-full font-bold hover:scale-105 hover:bg-gray-300 transition-all delay-100 my-5"
+          >
+            Verify Subscription
+          </button>
+        </div>}
+
       </div>
+      { showPopUp &&  <div className="fixed inset-0 flex justify-center items-center z-10 bg-gray-500 bg-opacity-50">
+      <div className="bg-gray-200 p-6 rounded-lg shadow-lg w-80">
+        <span className="flex justify-between">
+        <h2 className="text-lg font-semibold mb-4">OTP Verification</h2>
+            <button onClick={()=>setShowPopUp(false)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg></button>
+        </span>
+        <input
+          type="text"
+          placeholder="Enter OTP"
+          value={otp}
+          onChange={handleOtpChange}
+          className="border border-gray-300 rounded-md p-2 w-full mb-4"
+        />
+        <button
+          onClick={handleVerify}
+          className="bg-gray-700 text-white px-4 py-2 rounded-md w-full"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Verifying...' : 'Verify OTP'}
+        </button>
+        {message && <p className="mt-4 text-gray-600">{message}</p>}
+      </div>
+    </div>}
+      </div>
+      
+      
 
         <div className="p-8 w-3/5 overflow-y-scroll h-screen">
           <h1 className="text-2xl font-bold mb-4 font-ubu text-center text-[20px]">Prescription Form</h1>

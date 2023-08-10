@@ -421,33 +421,36 @@ export default function Doctor() {
                                 </button>
                               </div>
                               {e.prescriptions &&
-                                e.prescriptions.map((prescription) => (
-                                  <ul className="flex flex-col">
-                                    <li>{prescription.notes}</li>
-                                    <li>{prescription.diagnosis}</li>
-                                    <li>
-                                      {prescription.drugDetails.map((drug) => (
-                                        <ul className="flex flex-col">
-                                          <li>{drug.genericName}</li>
-                                          <li>{drug.brandName}</li>
-                                          <li>{drug.dosageInMg}</li>
-                                          <li>{drug.frequency}</li>
-                                          <li>{drug.duration}</li>
-                                          <li>{drug.firstTimeOrRefill}</li>
-                                          <li>{drug.substitutionAllowed}</li>
-                                        </ul>
-                                      ))}
-                                    </li>
-                                    <li>
-                                      {prescription.labTests &&
-                                        prescription.labTests.map((test) => (
-                                          <ul className="flex flex-col">
-                                            <li>{test.testType}</li>
-                                          </ul>
-                                        ))}
-                                    </li>
-                                  </ul>
-                                ))}
+                            e.prescriptions.map((prescription)=>(
+                              <ul className='flex flex-col'>
+                                <li>
+                                 Notes: {prescription.notes}
+                                </li>
+                                <li>Diagnosis: {prescription.diagnosis}</li>
+                                <li>Drug Details: {prescription.drugDetails.map((drug)=>
+                                <ul className='flex flex-col'>
+                                  <li>Generic Name: {drug.genericName}</li>
+                                  <li>Brand Name: {drug.brandName}</li>
+                                  <li>Dosage in Mg: {drug.dosageInMg}</li>
+                                  <li>Frequency: {drug.frequency}</li>
+                                  <li>Duration: {drug.duration}</li>
+                                  <li>First time or refill: {drug.firstTimeOrRefill}</li>
+                                  <li>Substitution: {drug.substitutionAllowed}</li>
+
+
+
+                                </ul>
+
+                                )}</li>
+                                <li>Tests: {prescription.labTests && prescription.labTests.map((test)=>
+                                <ul className='flex flex-col'>
+                                  <li>Test Type: {test.testType}</li>
+                                </ul>)}</li>
+                                
+                              </ul>
+                            ))
+                          }
+                                {!e.prescriptions && <div>No Prescriptions</div>}
                             </div>
                           )}
                         </div>
@@ -616,33 +619,36 @@ export default function Doctor() {
                                 </button>
                               </div>
                               {e.prescriptions &&
-                                e.prescriptions.map((prescription) => (
-                                  <ul className="flex flex-col">
-                                    <li>{prescription.notes}</li>
-                                    <li>{prescription.diagnosis}</li>
-                                    <li>
-                                      {prescription.drugDetails.map((drug) => (
-                                        <ul className="flex flex-col">
-                                          <li>{drug.genericName}</li>
-                                          <li>{drug.brandName}</li>
-                                          <li>{drug.dosageInMg}</li>
-                                          <li>{drug.frequency}</li>
-                                          <li>{drug.duration}</li>
-                                          <li>{drug.firstTimeOrRefill}</li>
-                                          <li>{drug.substitutionAllowed}</li>
-                                        </ul>
-                                      ))}
-                                    </li>
-                                    <li>
-                                      {prescription.labTests &&
-                                        prescription.labTests.map((test) => (
-                                          <ul className="flex flex-col">
-                                            <li>{test.testType}</li>
-                                          </ul>
-                                        ))}
-                                    </li>
-                                  </ul>
-                                ))}
+                            e.prescriptions.map((prescription)=>(
+                              <ul className='flex flex-col'>
+                                <li>
+                                 Notes: {prescription.notes}
+                                </li>
+                                <li>Diagnosis: {prescription.diagnosis}</li>
+                                <li>Drug Details: {prescription.drugDetails.map((drug)=>
+                                <ul className='flex flex-col'>
+                                  <li>Generic Name: {drug.genericName}</li>
+                                  <li>Brand Name: {drug.brandName}</li>
+                                  <li>Dosage in Mg: {drug.dosageInMg}</li>
+                                  <li>Frequency: {drug.frequency}</li>
+                                  <li>Duration: {drug.duration}</li>
+                                  <li>First time or refill: {drug.firstTimeOrRefill}</li>
+                                  <li>Substitution: {drug.substitutionAllowed}</li>
+
+
+
+                                </ul>
+
+                                )}</li>
+                                <li>Tests: {prescription.labTests && prescription.labTests.map((test)=>
+                                <ul className='flex flex-col'>
+                                  <li>Test Type: {test.testType}</li>
+                                </ul>)}</li>
+                                
+                              </ul>
+                            ))
+                          }
+                          {!e.prescriptions && <div>No Prescription</div>}
                             </div>
                           )}
                         </div>
