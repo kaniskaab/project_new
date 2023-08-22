@@ -3,47 +3,38 @@ import Sidebar from "./SidebarF";
 import { ToastContainer, toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "../../context.js/UserContext";
-import {
-
-  Paper,
-
-} from "@mui/material";
+import { Paper } from "@mui/material";
 import Header from "./HeaderF";
 
 export default function DoctorRegister() {
   const refreshToken = localStorage.getItem("token");
-  const [qr, setQr] = useState('');
+  const [qr, setQr] = useState("");
   // const [qrView, setQrView] = useState("");
 
   useEffect(() => {
     document.title = "Doctor Registration";
     const fetchData = async () => {
       try {
-       
-
         const responseNew = await fetch(
-          `http://localhost:3000/registerDoctor/api/qrcode/doctor-registration-qrcode`,
+          `${process.env.REACT_APP_BASE_URL}/api/qrcode/doctor-registration-qr-code`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${refreshToken}`,
-
-            }
+            },
           }
         );
         if (!responseNew.ok) {
           throw new Error("Failed to fetch user data.");
         }
-        if(responseNew.ok)
-        {
-             console.log(responseNew)
-             const data = await responseNew.text()
-            //  setQr(data);
-             console.log(data)
-        toast.success("Qr code fetched")
+        if (responseNew.ok) {
+          // console.log(responseNew);
+          const data = await responseNew.blob();
+           setQr(data);
+          console.log(data);
+          toast.success("Qr code fetched");
         }
-       
       } catch (error) {
         console.error("An error occurred while fetching user data:", error);
       }
@@ -52,16 +43,18 @@ export default function DoctorRegister() {
   }, []);
   return (
     <div>
-       <div>
       <div>
-      <Header/>
-      <div className='flex'>
-        <Sidebar/>
+        <div>
+          <Header />
+          <div className="flex">
+            <Sidebar />
+          </div>
+          <div className="ml-[400px] mt-[75px] flex flex-col">
+          <img src={`${URL.createObjectURL(qr)}`} alt="Qr" className='h-[200px] w-[200px]'/>
+          </div>
+        </div>
       </div>
-      <div className="ml-[400px] mt-[75px] flex flex-col"></div>
-      </div>
-      </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
