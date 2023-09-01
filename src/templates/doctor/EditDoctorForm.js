@@ -178,7 +178,7 @@ const ComponentMapper = () => {
         } }
         onCancel={() => console.log('cancel action')}
       />
-      <pre>{JSON.stringify(values)}</pre>
+      {/* <pre>{JSON.stringify(values)}</pre> */}
       <ToastContainer />
 
     </div>

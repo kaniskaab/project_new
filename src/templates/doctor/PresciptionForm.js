@@ -48,10 +48,11 @@ const[verify,setVerify]=useState();
       setIsLoading(true);
       const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/consultations/${id}/prescription/${verify.id}/verify`, {
         method: 'POST',
-        body: JSON.stringify({ "otpCode": otp }),
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${refreshToken}`,
         },
+        body: JSON.stringify({ "otpCode": otp })
       });
       console.log(otp)
       if (response.ok) {
@@ -145,8 +146,8 @@ const[verify,setVerify]=useState();
       <div className="flex">
         <Sidebar />
       </div>
-      <div className="ml-[350px] mt-[75px] flex">
-      <div className="w-2/5 bg-white mt-[75px] rounded-[22px] overflow-y-scroll">
+      <div className="ml-[350px] mt-[75px] flex flex-col justify-center items-center">
+      <div className="w-2/5 bg-white mt-[75px] rounded-[22px]">
         <div className="flex w-full items-center justify-center font-ubu text-[20px]">Details for: {details.user? <h1>{details.user.name}</h1>:<h1>{details.name}</h1>}</div>
         <ul className="flex flex-col p-5 justify-around text-[15px] leading-[40px]">
           <li className="flex items-center">
@@ -168,38 +169,54 @@ const[verify,setVerify]=useState();
               </ul>
           </li>
         </ul>
-        <div className="flex items-center justify-center text-center font-mono text-[15px]">
+        <div className="flex items-center justify-center text-center font-mono text-[15px] w-full">
       {verify && <div className="">
-         <ul>
-          <li>Status: {verify.status}</li>
-          <li>Notes: {verify.notes}</li>
-          <li>Diagnosis: {verify.diagnosis}</li>
-          <li>Drug Details: {verify.drugDetails.map((drug)=>
-          <ul>
-            <li>Generic Name: {drug.genericName}</li>
-            <li>Brand Name: {drug.brandName}</li>
-            <li>Dosage in Mg: {drug.dosageInMg}</li>
-            <li>Frequency: {drug.frequency}</li>
-            <li>Duration: {drug.duration}</li>
-            <li>First Time Or Refill: {drug.firstTimeOrRefill}</li>
-            <li>Substitution Allowed: {drug.substitutionAllowed}</li>
+      <div className="text-2xl font-bold font-ubu mb-4">Prescription</div>
+<ul className="space-y-2">
+  <li className="flex justify-between">
+    <span>Status:</span>
+    <span>{verify.status}</span>
+  </li>
+  <li className="flex justify-between">
+    <span>Notes:</span>
+    <span>{verify.notes}</span>
+  </li>
+  <li className="flex justify-between">
+    <span>Diagnosis:</span>
+    <span>{verify.diagnosis}</span>
+  </li>
+  <li>
+    <span>Drug Details:</span>
+    <ul className="space-y-2 pl-4">
+      {verify.drugDetails.map((drug) => (
+        <li key={drug.genericName} className="flex justify-between">
+          <span>Generic Name:</span>
+          <span>{drug.genericName}</span>
+        </li>
+        // {/* Add similar styling for other drug properties */}
+      ))}
+    </ul>
+  </li>
+  <li>
+    <span>Lab Tests:</span>
+    <ul className="space-y-2 pl-4">
+      {verify.labTests.map((test) => (
+        <li key={test.testType} className="flex justify-between">
+          <span>Test Type:</span>
+          <span>{test.testType}</span>
+        </li>
+        // {/* Add similar styling for other test properties */}
+      ))}
+    </ul>
+  </li>
+</ul>
+<button
+  onClick={() => setShowPopUp(true)}
+  className="px-4 py-2 bg-gray-200 rounded-lg w-full font-bold hover:scale-105 hover:bg-gray-300 transition-all delay-100 my-5"
+>
+  Verify Prescription
+</button>
 
-
-          </ul>)}</li>
-
-
-
-          <li>Lab Tests: {verify.labTests.map((test)=>
-          <ul>
-            <li>Test Type: {test.testType}</li>
-          </ul>)}</li>
-         </ul>
-         <button
-            onClick={()=>setShowPopUp(true)}
-            className="px-4 py-2 bg-gray-200 rounded-lg w-full font-bold hover:scale-105 hover:bg-gray-300 transition-all delay-100 my-5"
-          >
-            Verify Subscription
-          </button>
         </div>}
 
       </div>
@@ -230,172 +247,174 @@ const[verify,setVerify]=useState();
     </div>}
       </div>
       
+      {!verify &&
+ <div className="p-8 w-full">
+ <h1 className="text-2xl font-bold mb-4 font-ubu text-center text-[20px]">Prescription Form</h1>
+
+ <div className="mb-4">
+   <label className="block mb-2 text-[15px] font-mono font-thin">Notes:</label>
+   <textarea
+     name="notes"
+     value={prescription.notes}
+     onChange={(e) => handleInputChange(e)}
+     className="w-full h-20 p-2 border rounded-lg focus:outline-none"
+   />
+ </div>
+
+ <div className="mb-4">
+   <label className="block mb-2 text-[15px] font-mono font-thin">Diagnosis:</label>
+   <input
+     type="text"
+     name="diagnosis"
+     value={prescription.diagnosis}
+     onChange={(e) => handleInputChange(e)}
+     className="w-full p-2 border rounded-lg focus:outline-none "
+   />
+ </div>
+
+ <div className="mb-4">
+   <label className="block mb-2 text-[15px] font-mono font-thin">Drug Details:</label>
+   {prescription.drugDetails.map((drug, index) => (
+     <div key={index} className="flex flex-col mb-2">
+       <input
+         type="text"
+         name="genericName"
+         value={drug.genericName}
+         onChange={(e) => handleInputChange(e, index, "drugDetails")}
+         className="flex-1 p-2 mr-2 border rounded-lg my-2"
+         placeholder="Generic Name"
+       />
+       <input
+         type="text"
+         name="brandName"
+         value={drug.brandName}
+         onChange={(e) => handleInputChange(e, index, "drugDetails")}
+         className="flex-1 p-2 mr-2 border rounded-lg focus:outline-none my-2"
+         placeholder="Brand Name"
+       />
       
+       <div className="flex items-center w-full justify-between">
+       <input
+         type="number"
+         name="dosageInMg"
+         onChange={(e) => handleInputChange(e, index, "drugDetails")}
+         className="w-[120px] p-2 mr-2 border rounded-lg focus:outline-none my-2"
+         placeholder="Dosage mg"
+       />
+       <input
+         type="number"
+         name="frequency"
+         onChange={(e) => handleInputChange(e, index, "drugDetails")}
+         className="w-[120px] p-2 mr-2 border rounded-lg focus:outline-none my-2"
+         placeholder="Frequency"
+       />
+       <input
+         type="number"
+         name="duration"
+         onChange={(e) => handleInputChange(e, index, "drugDetails")}
+         className="w-[120px] p-2 mr-2 border rounded-lg focus:outline-none my-2"
+         placeholder="Duration"
+       />
+       </div>
+       
+       <input
+         type="text"
+         name="firstTimeOrRefill"
+         value={drug.firstTimeOrRefill}
+         onChange={(e) => handleInputChange(e, index, "drugDetails")}
+         className="flex-1 p-2 mr-2 border rounded-lg focus:outline-none my-2"
+         placeholder="First Time or Refill"
+       />
+       <select
+         name="substitutionAllowed"
+         value={drug.substitutionAllowed}
+         onChange={(e) => handleInputChange(e, index, "drugDetails")}
+         className="w-24 p-2 mr-2 border rounded-lg focus:outline-none my-2"
+       >
+         <option value={true}>True</option>
+         <option value={false}>False</option>
+       </select>
+     <div>
 
-        <div className="p-8 w-3/5 overflow-y-scroll h-screen">
-          <h1 className="text-2xl font-bold mb-4 font-ubu text-center text-[20px]">Prescription Form</h1>
-
-          <div className="mb-4">
-            <label className="block mb-2 text-[15px] font-mono font-thin">Notes:</label>
-            <textarea
-              name="notes"
-              value={prescription.notes}
-              onChange={(e) => handleInputChange(e)}
-              className="w-full h-20 p-2 border rounded-lg focus:outline-none"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block mb-2 text-[15px] font-mono font-thin">Diagnosis:</label>
-            <input
-              type="text"
-              name="diagnosis"
-              value={prescription.diagnosis}
-              onChange={(e) => handleInputChange(e)}
-              className="w-full p-2 border rounded-lg focus:outline-none "
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block mb-2 text-[15px] font-mono font-thin">Drug Details:</label>
-            {prescription.drugDetails.map((drug, index) => (
-              <div key={index} className="flex flex-col mb-2">
-                <input
-                  type="text"
-                  name="genericName"
-                  value={drug.genericName}
-                  onChange={(e) => handleInputChange(e, index, "drugDetails")}
-                  className="flex-1 p-2 mr-2 border rounded-lg my-2"
-                  placeholder="Generic Name"
-                />
-                <input
-                  type="text"
-                  name="brandName"
-                  value={drug.brandName}
-                  onChange={(e) => handleInputChange(e, index, "drugDetails")}
-                  className="flex-1 p-2 mr-2 border rounded-lg focus:outline-none my-2"
-                  placeholder="Brand Name"
-                />
-               
-                <div className="flex items-center w-full justify-between">
-                <input
-                  type="number"
-                  name="dosageInMg"
-                  onChange={(e) => handleInputChange(e, index, "drugDetails")}
-                  className="w-[120px] p-2 mr-2 border rounded-lg focus:outline-none my-2"
-                  placeholder="Dosage mg"
-                />
-                <input
-                  type="number"
-                  name="frequency"
-                  onChange={(e) => handleInputChange(e, index, "drugDetails")}
-                  className="w-[120px] p-2 mr-2 border rounded-lg focus:outline-none my-2"
-                  placeholder="Frequency"
-                />
-                <input
-                  type="number"
-                  name="duration"
-                  onChange={(e) => handleInputChange(e, index, "drugDetails")}
-                  className="w-[120px] p-2 mr-2 border rounded-lg focus:outline-none my-2"
-                  placeholder="Duration"
-                />
-                </div>
-                
-                <input
-                  type="text"
-                  name="firstTimeOrRefill"
-                  value={drug.firstTimeOrRefill}
-                  onChange={(e) => handleInputChange(e, index, "drugDetails")}
-                  className="flex-1 p-2 mr-2 border rounded-lg focus:outline-none my-2"
-                  placeholder="First Time or Refill"
-                />
-                <select
-                  name="substitutionAllowed"
-                  value={drug.substitutionAllowed}
-                  onChange={(e) => handleInputChange(e, index, "drugDetails")}
-                  className="w-24 p-2 mr-2 border rounded-lg focus:outline-none my-2"
-                >
-                  <option value={true}>True</option>
-                  <option value={false}>False</option>
-                </select>
-              <div>
-
-              </div>
-                <button
-                  onClick={() => {
-                    const updatedDrugDetails = [...prescription.drugDetails];
-                    updatedDrugDetails.splice(index, 1);
-                    setPrescription({
-                      ...prescription,
-                      drugDetails: updatedDrugDetails,
-                    });
-                  }}
-                  className="px-2 py-1 rounded-full bg-gray-200 w-10 h-10 hover:scale-105 hover:bg-gray-300 transition-all delay-200"
-                >
-                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+     </div>
+       <button
+         onClick={() => {
+           const updatedDrugDetails = [...prescription.drugDetails];
+           updatedDrugDetails.splice(index, 1);
+           setPrescription({
+             ...prescription,
+             drugDetails: updatedDrugDetails,
+           });
+         }}
+         className="px-2 py-1 rounded-full bg-gray-200 w-10 h-10 hover:scale-105 hover:bg-gray-300 transition-all delay-200"
+       >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+<path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
 </svg>
 
-                </button>
-              </div>
-            ))}
-            <button
-              onClick={addDrugDetails}
-              className="-mt-10 bg-gray-200 h-10 w-10 flex items-center justify-center text-white rounded-full ml-auto hover:scale-105 hover:bg-gray-300 transition-all delay-200"
-            >
-             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+       </button>
+     </div>
+   ))}
+   <button
+     onClick={addDrugDetails}
+     className="-mt-10 bg-gray-200 h-10 w-10 flex items-center justify-center text-white rounded-full ml-auto hover:scale-105 hover:bg-gray-300 transition-all delay-200"
+   >
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="w-6 h-6">
+<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
 
-            </button>
-          </div>
+   </button>
+ </div>
 
-          <div className="mb-4">
-            <label className="block mb-2 font-thin font-mono text-[15px]">Lab Tests:</label>
-            {prescription.labTests.map((test, index) => (
-              <div key={index} className="flex mb-2 flex-col">
-                <input
-                  type="text"
-                  name="testType"
-                  value={test.testType}
-                  onChange={(e) => handleInputChange(e, index, "labTests")}
-                  className="flex-1 p-2 mr-2 border rounded-lg focus:outline-none"
-                  placeholder="Test Type"
-                />
-                <button
-                  onClick={() => {
-                    const updatedLabTests = [...prescription.labTests];
-                    updatedLabTests.splice(index, 1);
-                    setPrescription({
-                      ...prescription,
-                      labTests: updatedLabTests,
-                    });
-                  }}
-                  className="rounded-full mt-2 bg-gray-200 h-10 w-10 flex items-center justify-center hover:scale-105 hover:bg-gray-300 transition-all delay-200"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+ <div className="mb-4">
+   <label className="block mb-2 font-thin font-mono text-[15px]">Lab Tests:</label>
+   {prescription.labTests.map((test, index) => (
+     <div key={index} className="flex mb-2 flex-col">
+       <input
+         type="text"
+         name="testType"
+         value={test.testType}
+         onChange={(e) => handleInputChange(e, index, "labTests")}
+         className="flex-1 p-2 mr-2 border rounded-lg focus:outline-none"
+         placeholder="Test Type"
+       />
+       <button
+         onClick={() => {
+           const updatedLabTests = [...prescription.labTests];
+           updatedLabTests.splice(index, 1);
+           setPrescription({
+             ...prescription,
+             labTests: updatedLabTests,
+           });
+         }}
+         className="rounded-full mt-2 bg-gray-200 h-10 w-10 flex items-center justify-center hover:scale-105 hover:bg-gray-300 transition-all delay-200"
+       >
+         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+<path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
 </svg>
-                </button>
-              </div>
-            ))}
-            <button
-              onClick={addLabTest}
-              className=" -mt-10 bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center hover:scale-105 hover:bg-gray-300 transition-all delay-200 ml-auto"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+       </button>
+     </div>
+   ))}
+   <button
+     onClick={addLabTest}
+     className=" -mt-10 bg-gray-200 h-10 w-10 rounded-full flex items-center justify-center hover:scale-105 hover:bg-gray-300 transition-all delay-200 ml-auto"
+   >
+     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="w-6 h-6">
+<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
-            </button>
-          </div>
+   </button>
+ </div>
 
-          <button
-            onClick={handleSubmit}
-            className="px-4 py-2 bg-gray-200 rounded-lg w-full font-bold hover:scale-105 hover:bg-gray-300 transition-all delay-100"
-          >
-            Submit Prescription
-          </button>
-        </div>
+ <button
+   onClick={handleSubmit}
+   className="px-4 py-2 bg-gray-200 rounded-lg w-full font-bold hover:scale-105 hover:bg-gray-300 transition-all delay-100"
+ >
+   Submit Prescription
+ </button>
+</div>
+      }
+
+       
       </div>
     </div>
   );

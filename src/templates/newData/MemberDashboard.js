@@ -99,9 +99,9 @@ export default function MemberDashboard() {
     <div className="bg-no-repeat h-[300px] mx-auto bg-contain w-1/2" style={{backgroundImage:`url(${Group})`}}></div>
     <div className="text-[20px] font-bold font-mono text-center">Welcome {userName}
 </div>
-    <div className="h-[400px] w-[630px] mx-auto bg-[#c5d5e8] rounded-[91px] flex flex-col items-center">
-      <div className="h-[100px] w-[626px] rounded-[77px] bg-white flex items-center justify-center"><text className="text-[20px] font-bold font-ubu">General Information</text></div>
-      <div className="h-[200px] w-4/5 bg-white mt-[20px] rounded-[22px] overflow-y-scroll">
+    <div className=" w-[630px] pb-2 mx-auto bg-[#c5d5e8] rounded-[91px] flex flex-col items-center">
+      <div className="h-[50px] w-[500px] rounded-[77px] bg-white flex items-center justify-center mt-2"><text className="text-[20px] font-bold font-ubu">General Information</text></div>
+      <div className=" w-4/5 bg-white mt-[20px] rounded-[22px]">
         <ul className="flex flex-col p-5 justify-around text-[15px] leading-[20px]">
           <li className="flex items-center">
             <Allergy/><text className="px-2">Gender:</text> <text className="pl-2">{data.gender}</text>
@@ -137,15 +137,15 @@ export default function MemberDashboard() {
          <button className="text-[20px] font-ubu rounded-2xl bg-[#c5d5e8] border-black w-2/5" onClick={()=>navigate('/viewAllergies')}>Allergies</button>
       </div>
       </div>
-      <div className="h-[100px] w-[626px] mx-auto rounded-[77px] z-10 bg-white flex items-center justify-center"><text className="text-[20px] font-bold font-ubu flex">Dependents</text></div>
+      <div className="h-[50px] w-[626px] mx-auto rounded-[77px] z-10 bg-white flex items-center justify-center"><text className="text-[20px] font-bold font-ubu flex">Dependents</text></div>
 
-      <div className="h-[500px] w-[90%] mx-auto bg-[#c5d5e8] -mt-10 rounded-[91px] flex flex-col items-center overflow-y-scroll mb-10">
+      <div className=" w-[90%] mx-auto bg-[#c5d5e8] -mt-[60px] rounded-[91px] flex flex-col items-center mb-10 pb-10">
       {
         family&& family.map((member)=>
         (
-          <div className="h-[250px] w-4/5 bg-white mt-[75px] rounded-[22px] flex">
+          <div className=" p-2 w-4/5 bg-white mt-[75px] rounded-[22px] flex">
         <div className="h-full flex justify-center items-center"><Person/></div>
-        <ul className="flex flex-col p-5 justify-around ">
+        <ul className="flex flex-col p-5">
         <li className="flex items-center">
 <text className="px-2 text-[15px]">{member.name}</text> 
           </li>

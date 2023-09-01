@@ -10,14 +10,14 @@ export default function Sidebar() {
                  
                  
                     
-                    <li className='flex'>
+                    {/* <li className='flex'>
                       <button className='flex p-3 mr-3 w-full rounded-r-[32px] hover:bg-white/50 font-ubu text-[20px] hover:scale-105 transition-all delay-200'>
                         <Remove/>
                             <Delete/>
 
                         </button>
                         
-                    </li>
+                    </li> */}
 
                 </ul>
             </div>

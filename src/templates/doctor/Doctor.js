@@ -215,14 +215,14 @@ export default function Doctor() {
       <div className="ml-[350px] mt-[75px] flex flex-col">
         <div className="flex items-end">
           <YourSvg />
-          <div className="flex flex-col text-[30px] font-bold font-ubu ">
+          <div className="flex flex-col text-[20px] font-bold font-ubu ">
             <div>Welcome</div>
             <div>Doctor {data.name}</div>
           </div>
         </div>
         <div className="flex w-full">
           <div className="w-1/2">
-            <div className="w-full h-[300px] bg-[#C5D5E8] rounded-[36px] pt-5 px-2 ml-1">
+            <div className="w-[95%] h-[300px] bg-[#C5D5E8] rounded-[36px] pt-5 px-2 ml-1">
               <div className="w-3/5 text-[20px] flex items-center text-center mx-auto justify-center bg-gray-200 rounded-full h-[50px] ">
                 <Info />
                 <span className="px-2">Details</span>
@@ -250,14 +250,14 @@ export default function Doctor() {
               </button>
             </div>
           </div>
-          <div className="w-1/2">
-            <div className=" h-[100px] w-4/5 mx-auto rounded-[91px] bg-white relative z-10 -mt-[200px] flex items-center justify-center">
+          <div className="w-1/2 mt-[70px]">
+            <div className="  w-4/5 py-2 mx-auto rounded-[91px] bg-white relative z-10 -mt-[200px] flex items-center justify-center">
               {" "}
-              <text className="text-[30px] font-bold font-ubu">
+              <text className="text-[20px] font-bold font-ubu">
                 Upcoming Consultation
               </text>
             </div>
-            <div className="bg-[#C5D5E8] h-screen w-full mx-2 rounded-[91px] -mt-[60px] pt-[60px] overflow-y-scroll">
+            <div className="bg-[#C5D5E8] w-full rounded-[70px] -mt-[60px] pt-[60px] pb-10">
               <ul>
                 {consultation &&
                   consultation.map((e) => (
@@ -314,8 +314,8 @@ export default function Doctor() {
                             <span>View Prescription</span>
                           </button>
                           {view && details && viewId == e.id && showQr && (
-                            <div className="h-[400px] bg-[#C5D5E8] w-[400px] fixed top-[100px] z-20 rounded-lg items-center justify-center shadow-lg">
-                              <div className="h-[90%] w-[90%] bg-white/70 rounded-lg overflow-y-scroll justify-center px-2 m-auto mt-5 overflow-x-clip ">
+                            <div className=" bg-[#C5D5E8] w-[400px] fixed top-[60px] z-20 rounded-lg items-center justify-center shadow-lg p-2">
+                              <div className=" bg-white/70 rounded-lg justify-center px-2 overflow-x-clip ">
                                 <ul className="flex flex-col items-center justify-center text-[15px]">
                                   <li>
                                     <img
@@ -459,13 +459,13 @@ export default function Doctor() {
                   ))}
               </ul>
             </div>
-            <div className=" h-[100px] w-4/5 mx-auto rounded-[91px] bg-white relative z-10 flex items-center justify-center">
+            <div className=" py-2 w-4/5 mx-auto rounded-[91px] bg-white relative z-10 flex items-center justify-center mt-10">
               {" "}
-              <text className="text-[30px] font-bold font-ubu">
+              <text className="text-[20px] font-bold font-ubu">
                 Past Consultation
               </text>
             </div>
-            <div className="bg-[#C5D5E8] h-screen w-full mx-2 rounded-[91px] -mt-[60px] pt-[60px] overflow-y-scroll">
+            <div className="bg-[#C5D5E8] w-full mx-2 rounded-[60px] -mt-[60px] pt-[60px] overflow-y-scroll pb-10">
               <ul>
                 {consultation &&
                   consultation.map((e) => (
@@ -512,9 +512,9 @@ export default function Doctor() {
                             <span>View Prescription</span>
                           </button>
                           {view && details && viewId == e.id && showQr && (
-                            <div className="h-[400px] bg-[#C5D5E8] w-[400px] fixed top-[100px] z-10 rounded-lg items-center justify-center shadow-lg">
-                              <div className="h-[90%] w-[90%] bg-white/70 rounded-lg overflow-y-scroll justify-center px-2 m-auto mt-5 overflow-x-clip ">
-                                <ul className="flex flex-col items-center justify-center text-[15px]">
+                            <div className=" bg-[#C5D5E8] w-[400px] fixed top-[60px] z-20 rounded-lg items-center justify-center shadow-lg p-2">
+                            <div className=" bg-white/70 rounded-lg justify-center px-2 overflow-x-clip ">
+                              <ul className="flex flex-col items-center justify-center text-[15px]">
                                   <li>
                                     <img
                                       src={`${URL.createObjectURL(qr)}`}
